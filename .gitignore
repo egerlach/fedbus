@@ -1,2 +1,2 @@
-log/*.log
-tmp/**/*
+ticketing/log/*.log
+ticketing/tmp/**/*
