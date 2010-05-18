@@ -16,8 +16,12 @@
     <%= f.text_field :email %>
   </p>
   <p>
-    <%= f.label :student_number_hash %><br />
-    <%= f.text_field :student_number_hash %>
+    <%= f.label :student_number %><br />
+    <%= f.password_field :student_number %>
+  </p>
+  <p>
+    <%= f.label :student_number_confirmation %><br />
+    <%= f.password_field :student_number_confirmation %>
   </p>
   <p>
     <%= f.submit 'Update' %>

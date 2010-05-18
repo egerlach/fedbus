@@ -1,13 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  first_name: 
-  last_name: 
-  email: 
-  student_number_hash: 
-
-two:
-  first_name: 
-  last_name: 
-  email: 
-  student_number_hash: 
+tester:
+  first_name: Test
+  last_name: Tester
+  email: test@test.com
+  student_number_hash: 7e071fd9b023ed8f18458a73613a0834f6220bd5cc50357ba3493c6040a9ea8c
