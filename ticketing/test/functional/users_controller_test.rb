@@ -1,29 +1,50 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
+
+  fixtures :users
+
   test "should get index" do
-    get :index
+    get :index, nil, {:userid => 'test'}
     assert_response :success
     assert_not_nil assigns(:users)
   end
 
   test "should get new" do
-    get :new
+    get :new, nil, {:userid => 'test'}
     assert_response :success
   end
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, :user => {
+      post :create, {:user => {
         :first_name => 'Test',
         :last_name => 'Tester',
         :student_number => '00000000',
         :student_number_confirmation => '00000000',
         :email => 'test@tester.com'
-      }
+      }}, {:userid => 'thetester'}
     end
 
     assert_redirected_to user_path(assigns(:user))
+  end
+
+  test "cannot create user with different id than the session" do
+    post :create, {:user => {
+      :first_name => 'Test',
+      :last_name => 'Tester',
+      :student_number => '00000000',
+      :student_number_confirmation => '00000000',
+      :email => 'test@tester.com',
+      :userid => 'evil'
+    }}, {:userid => 'thetester'}
+
+    assert_redirected_to user_path(assigns(:user))
+
+    # Make sure it created the user with the userid from the session
+    assert User.find_by_userid('thetester')
+    # Not from the post
+    assert User.find_by_userid('evil').nil?
   end
 
   test "should show user" do

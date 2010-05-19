@@ -7,7 +7,7 @@ class UserTest < ActiveSupport::TestCase
   test "Setting User student number stores the hash" do
     u = users(:tester)
     u.student_number = '00000000'
-    assert u.student_number_hash == '7e071fd9b023ed8f18458a73613a0834f6220bd5cc50357ba3493c6040a9ea8c'
+    assert_equal u.student_number_hash, '7e071fd9b023ed8f18458a73613a0834f6220bd5cc50357ba3493c6040a9ea8c'
   end
 
   test "Valid email address accepted" do
@@ -68,5 +68,4 @@ class UserTest < ActiveSupport::TestCase
     assert !u.save, "User accepts an entry without userid: " + u.errors.full_messages.inspect
     assert u.errors.invalid?(:userid)
   end
-
 end

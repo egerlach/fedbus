@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   def student_number=(n)
     @student_number=n
-    @student_number_hash = Digest::SHA256.hexdigest(n)
+    self.student_number_hash = Digest::SHA256.hexdigest(n)
   end
 
   def student_number_changed?

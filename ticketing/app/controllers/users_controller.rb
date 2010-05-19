@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  before_filter :login_required, :only => :index
+
   # GET /users
   # GET /users.xml
   def index
@@ -24,11 +27,16 @@ class UsersController < ApplicationController
   # GET /users/new
   # GET /users/new.xml
   def new
-    @user = User.new
+    unless session[:userid]
+      redirect_to :login
+    else
+      @user = User.new
+      @userid = session[:userid]
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @user }
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @user }
+      end
     end
   end
 
@@ -41,6 +49,9 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     @user = User.new(params[:user])
+    @user.userid = session[:userid]
+    @user.student_number = params[:user][:student_number]
+    @user.student_number_confirmation = params[:user][:student_number_confirmation]
 
     respond_to do |format|
       if @user.save
@@ -58,6 +69,7 @@ class UsersController < ApplicationController
   # PUT /users/1.xml
   def update
     @user = User.find(params[:id])
+    params[:user].delete('userid')
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -84,9 +96,8 @@ class UsersController < ApplicationController
   end
 
   def login
-    unless session[:cas_user]
-      CASClient::Frameworks::Rails::Filter.filter(self)
-    else
+    CASClient::Frameworks::Rails::Filter.filter(self) unless session[:cas_user]
+    if session[:cas_user]
       session[:userid] = session[:cas_user]
 
       if logged_in?
