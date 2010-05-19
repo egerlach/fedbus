@@ -5,3 +5,16 @@ tester:
   last_name: Tester
   email: test@test.com
   student_number_hash: 7e071fd9b023ed8f18458a73613a0834f6220bd5cc50357ba3493c6040a9ea8c
+  userid: test
+one:
+  first_name: One
+  last_name: Onesie
+  email: one@test.com
+  student_number_hash: 7e071fd9b023ed8f18458a73613a0834f6220bd5cc50357ba3493c6040a9ea8c
+  userid: one
+two:
+  first_name: Two
+  last_name: Twofer
+  email: two@test.com
+  student_number_hash: 7e071fd9b023ed8f18458a73613a0834f6220bd5cc50357ba3493c6040a9ea8c
+  userid: two

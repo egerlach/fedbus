@@ -82,4 +82,22 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def login
+    unless session[:cas_user]
+      CASClient::Frameworks::Rails::Filter.filter(self)
+    else
+      session[:userid] = session[:cas_user]
+
+      if logged_in?
+        redirect_back_or_default(:root)
+      else
+        login_required
+      end
+    end
+  end
+
+  def logout
+  end
+
 end
