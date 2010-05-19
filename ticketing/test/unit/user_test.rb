@@ -20,35 +20,41 @@ class UserTest < ActiveSupport::TestCase
     u = users(:tester)
     u.email = 'notavalidemail@something'
     assert !u.save, "User accepts an invalid email address: " + u.errors.full_messages.inspect
+    assert u.errors.invalid?(:email)
   end
 
   test "User requires first name" do
     u = users(:tester)
     u.first_name = nil
     assert !u.save, "User accepts an entry without first name: " + u.errors.full_messages.inspect
+    assert u.errors.invalid?(:first_name)
   end
 
   test "User requires last name" do
     u = users(:tester)
     u.last_name = nil
     assert !u.save, "User accepts an entry without last name: " + u.errors.full_messages.inspect
+    assert u.errors.invalid?(:last_name)
   end
 
   test "User requires email" do
     u = users(:tester)
     u.email = nil
     assert !u.save, "User accepts an entry without email: " + u.errors.full_messages.inspect
+    assert u.errors.invalid?(:email)
   end
 
   test "Setting student_number requires confirmation" do
     u = users(:tester)
     u.student_number = '00000000'
     assert !u.save, "User.student_number can be set without confirmation: " + u.errors.full_messages.inspect
+    assert u.errors.invalid?(:student_number_confirmation)
 
     u = users(:tester)
     u.student_number = '00000000'
     u.student_number_confirmation = '11111111'
     assert !u.save, "User.student_number can be set with invalid confirmation: " + u.errors.full_messages.inspect
+    assert u.errors.invalid?(:student_number)
 
     u = users(:tester)
     u.student_number = '12345678'
