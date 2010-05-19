@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   validates_format_of :email, :with => /[a-z0-9!#\$%&'*+\/=?^_`\{|\}~-]+(?:\.[a-z0-9!#\$%&'*+\/=?^_`\{|\}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-  validates_presence_of :first_name, :last_name
+  validates_presence_of :first_name, :last_name, :userid
   validates_presence_of :student_number, :student_number_confirmation, :if => :student_number_changed?
   validates_confirmation_of :student_number
 

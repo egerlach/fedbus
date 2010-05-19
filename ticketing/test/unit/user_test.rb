@@ -61,4 +61,12 @@ class UserTest < ActiveSupport::TestCase
     u.student_number_confirmation = '12345678'
     assert u.save, "User.student_number cannot be set with valid confirmation: " + u.errors.full_messages.inspect
   end
+
+  test "Userid is required" do
+    u = users(:tester)
+    u.userid = nil
+    assert !u.save, "User accepts an entry without userid: " + u.errors.full_messages.inspect
+    assert u.errors.invalid?(:userid)
+  end
+
 end
