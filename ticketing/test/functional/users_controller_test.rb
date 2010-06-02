@@ -84,4 +84,32 @@ class UsersControllerTest < ActionController::TestCase
     get :login, nil, {:cas_user => "nonexistantuser"}
     assert_redirected_to :new_user
   end
+
+  test "login should store return_to parameter" do
+    session[:return_to] = nil
+    get :login, {:return_to => "/previous/page"}
+    assert_equal "/previous/page", session[:return_to]
+  end
+
+  test "logout should reset session" do
+    session[:cas_user] = "jlpicard"
+    session[:userid] = "jlpicard"
+
+    assert_not_nil session[:cas_user]
+    assert_not_nil session[:userid]
+
+    get :logout
+
+    assert_nil session[:cas_user]
+    assert_nil session[:userid]
+  end
+
+  test "logout should redirect to CAS" do
+    session[:cas_user] = "jlpicard"
+    session[:userid] = "jlpicard"
+
+    get :logout
+
+    assert_redirected_to "https://cas.uwaterloo.ca/cas/logout"
+  end
 end

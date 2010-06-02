@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FedBus Ticketing</title>
+  <%= stylesheet_link_tag 'scaffold' %>
+</head>
+<body>
+
+<%= render :partial => 'common/auth' %>
+
+<% if flash[:notice] %>
+  <p style="color: green"><%= flash[:notice] %></p>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>

@@ -16,4 +16,7 @@ class User < ActiveRecord::Base
     @student_number || @student_number_confirmation
   end
 
+  def to_s
+    "%s %s" % [first_name, last_name]
+  end
 end
