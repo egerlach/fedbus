@@ -1,28 +1,8 @@
 <h1>New user for <%= @userid %></h1>
 
 <% form_for(@user) do |f| %>
-  <%= f.error_messages %>
+  <%= render :partial => "form", :locals => {:f => f} %>
 
-  <p>
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
-  </p>
-  <p>
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </p>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :student_number %><br />
-    <%= f.password_field :student_number %>
-  </p>
-  <p>
-    <%= f.label :student_number_confirmation %><br />
-    <%= f.password_field :student_number_confirmation %>
-  </p>
   <p>
     <%= f.submit 'Create' %>
   </p>

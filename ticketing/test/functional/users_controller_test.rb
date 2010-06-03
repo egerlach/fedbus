@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
 
-  fixtures :users
+  fixtures :users, :roles
 
   test "should get index" do
     get :index, nil, {:userid => 'test'}
@@ -111,5 +111,13 @@ class UsersControllerTest < ActionController::TestCase
     get :logout
 
     assert_redirected_to "https://cas.uwaterloo.ca/cas/logout"
+  end
+
+  test "should assign roles" do
+    assert_difference('users(:one).roles.count', 1) do
+      put :update, :id => users(:one).to_param, :user => {:role_ids => [roles(:one).id]}
+    end
+
+    assert_redirected_to user_path(assigns(:user))
   end
 end

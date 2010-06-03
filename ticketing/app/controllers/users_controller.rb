@@ -68,8 +68,8 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
+    params[:user][:role_ids] ||= []
     @user = User.find(params[:id])
-    params[:user].delete('userid')
 
     respond_to do |format|
       if @user.update_attributes(params[:user])

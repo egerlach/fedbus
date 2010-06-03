@@ -1,0 +1,28 @@
+<%= f.error_messages %>
+
+<p>
+  <%= f.label :first_name %><br />
+  <%= f.text_field :first_name %>
+</p>
+<p>
+  <%= f.label :last_name %><br />
+  <%= f.text_field :last_name %>
+</p>
+<p>
+  <%= f.label :email %><br />
+  <%= f.text_field :email %>
+</p>
+<p>
+  <%= f.label :student_number %><br />
+  <%= f.password_field :student_number %>
+</p>
+<p>
+  <%= f.label :student_number_confirmation %><br />
+  <%= f.password_field :student_number_confirmation %>
+</p>
+<p>
+  Roles<br />
+  <% for role in Role.all %>
+    <%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id) %><%= role.name %><br />
+  <% end %>
+</p>
