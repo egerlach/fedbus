@@ -3,6 +3,15 @@
   <%=h @role.name %>
 </p>
 
+<p>
+  <b>Permissions:</b>
+</p>
+
+<ul>
+  <% for permission in @role.permissions %>
+    <li><%= link_to permission.name, permission %></li>
+  <% end %>
+</ul>
 
 <%= link_to 'Edit', edit_role_path(@role) %> |
 <%= link_to 'Back', roles_path %>

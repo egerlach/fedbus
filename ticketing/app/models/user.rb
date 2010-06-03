@@ -23,4 +23,20 @@ class User < ActiveRecord::Base
   def to_s
     "%s %s" % [first_name, last_name]
   end
+
+  def has_permission?(permission)
+    # accept various kinds of input
+    if permission.is_a? Symbol
+      permission = Permission.find_by_name(permission.to_s.humanize)
+    elsif permission.is_a? String
+      permission = Permission.find_by_name(permission)
+    elsif permission.is_a? Integer
+      permission = Permission.find_by_id(permission)
+    end
+
+    # by this point, we should have an actual Permission model
+    return false unless permission.is_a? Permission
+
+    return roles.any? { |role| role.permissions.include? permission }
+  end
 end

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
-  fixtures :users
+  fixtures :users, :roles, :permissions
 
   test "Setting User student number stores the hash" do
     u = users(:tester)
@@ -67,5 +67,65 @@ class UserTest < ActiveSupport::TestCase
     u.userid = nil
     assert !u.save, "User accepts an entry without userid: " + u.errors.full_messages.inspect
     assert u.errors.invalid?(:userid)
+  end
+
+  test "has_permission? should accept symbols" do
+    user = users(:tester)
+    role = roles(:one)
+    perm = permissions(:eat_cake)
+
+    assert !user.has_permission?(:eat_cake), "User should not have permission unless given an appropriate role."
+
+    role.permissions << perm
+    role.users << user
+    role.save!
+    user.reload
+
+    assert user.has_permission?(:eat_cake), "User should have permission once given an appropriate role."
+  end
+
+  test "has_permission? should accept strings" do
+    user = users(:tester)
+    role = roles(:one)
+    perm = permissions(:eat_cake)
+
+    assert !user.has_permission?("Eat cake"), "User should not have permission unless given an appropriate role."
+
+    role.permissions << perm
+    role.users << user
+    role.save!
+    user.reload
+
+    assert user.has_permission?("Eat cake"), "User should have permission once given an appropriate role."
+  end
+
+  test "has_permission? should accept IDs" do
+    user = users(:tester)
+    role = roles(:one)
+    perm = permissions(:eat_cake)
+
+    assert !user.has_permission?(perm.id), "User should not have permission unless given an appropriate role."
+
+    role.permissions << perm
+    role.users << user
+    role.save!
+    user.reload
+
+    assert user.has_permission?(perm.id), "User should have permission once given an appropriate role."
+  end
+
+  test "has_permission? should accept Permission models" do
+    user = users(:tester)
+    role = roles(:one)
+    perm = permissions(:eat_cake)
+
+    assert !user.has_permission?(perm), "User should not have permission unless given an appropriate role."
+
+    role.permissions << perm
+    role.users << user
+    role.save!
+    user.reload
+
+    assert user.has_permission?(perm), "User should have permission once given an appropriate role."
   end
 end

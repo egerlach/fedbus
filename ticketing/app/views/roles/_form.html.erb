@@ -1,0 +1,14 @@
+<%= f.error_messages %>
+
+<p>
+  <%= f.label :name %><br />
+  <%= f.text_field :name %>
+</p>
+
+<p>
+  Permissions<br />
+  <% for permission in Permission.all %>
+    <%= check_box_tag "role[permission_ids][]", permission.id, @role.permission_ids.include?(permission.id) %>
+    <%= permission.name %>
+  <% end %>
+</p>
