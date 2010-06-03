@@ -98,7 +98,7 @@ class UsersController < ApplicationController
   def login
     # If a path to return to was set (e.g. by a link leading to the login page),
     # use it. This means that the user is correctly redirected, like login_required.
-    session[:return_to] = params[:return_to] if params[:return_to]
+    store_location params[:return_to] if params[:return_to]
 
     CASClient::Frameworks::Rails::Filter.filter(self) unless session[:cas_user]
 

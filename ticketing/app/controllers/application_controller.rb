@@ -13,8 +13,8 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
 
-  def store_location
-    session[:return_to] = request.request_uri
+  def store_location(return_to = nil)
+    session[:return_to] = return_to || request.request_uri
   end
 
   def redirect_back_or_default(default)
