@@ -2,7 +2,9 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include Authorization::ControllerMixin
   helper :all # include all helpers, all the time
+  helper_method :current_user, :logged_in?
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
