@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  destination: MyString
+  weekday: 1
+  departure: 12:19:35
+  arrival: 12:19:35
+  return: 12:19:35
+  ticket_price: 1.5
+  sales_lead: 1
+  comment: MyText
+  return_trip: 1

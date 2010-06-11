@@ -8,3 +8,6 @@ two:
 
 eat_cake:
   name: Eat cake
+
+trips:
+  name: Trips

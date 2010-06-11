@@ -1,0 +1,42 @@
+<%= f.error_messages %>
+
+<p>
+  <%= f.label :name %><br />
+  <%= f.text_field :name %>
+</p>
+<p>
+  <%= f.label :destination %><br />
+  <%= f.text_field :destination %>
+</p>
+<p>
+  <%= f.label :weekday %><br />
+  <%= f.select :weekday, Date::DAYNAMES.collect { |x| [x, Date::DAYNAMES.index(x)] }, {:prompt => 'Select Weekday'} %>
+</p>
+<p>
+  <%= f.label :departure %><br />
+  <%= f.time_select :departure, :minute_step => 5, :ignore_date => true %>
+</p>
+<p>
+  <%= f.label :arrival %><br />
+  <%= f.time_select :arrival, :minute_step => 5, :ignore_date => true %>
+</p>
+<p>
+  <%= f.label :return %><br />
+  <%= f.time_select :return, :minute_step => 5, :ignore_date => true %>
+</p>
+<p>
+  <%= f.label :ticket_price %><br />
+  <%= f.text_field :ticket_price %>
+</p>
+<p>
+  <%= f.label :sales_lead %><br />
+  <%= f.text_field :sales_lead %>
+</p>
+<p>
+  <%= f.label :return_trip %><br />
+  <%= f.text_field :return_trip %>
+</p>
+<p>
+  <%= f.label :comment %><br />
+  <%= f.text_area :comment %>
+</p>

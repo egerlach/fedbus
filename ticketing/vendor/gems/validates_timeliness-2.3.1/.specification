@@ -1,0 +1,90 @@
+--- !ruby/object:Gem::Specification 
+name: validates_timeliness
+version: !ruby/object:Gem::Version 
+  version: 2.3.1
+platform: ruby
+authors: 
+- Adam Meehan
+autorequire: validates_timeliness
+bindir: bin
+cert_chain: []
+
+date: 2010-03-18 00:00:00 -04:00
+default_executable: 
+dependencies: []
+
+description: Date and time validation plugin for Rails 2.x which allows custom formats
+email: adam.meehan@gmail.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- README.rdoc
+- LICENSE
+- TODO
+- CHANGELOG
+files: 
+- LICENSE
+- README.rdoc
+- Rakefile
+- TODO
+- CHANGELOG
+- lib/validates_timeliness/action_view/instance_tag.rb
+- lib/validates_timeliness/active_record/attribute_methods.rb
+- lib/validates_timeliness/active_record/multiparameter_attributes.rb
+- lib/validates_timeliness/formats.rb
+- lib/validates_timeliness/locale/en.yml
+- lib/validates_timeliness/matcher.rb
+- lib/validates_timeliness/parser.rb
+- lib/validates_timeliness/spec/rails/matchers/validate_timeliness.rb
+- lib/validates_timeliness/validation_methods.rb
+- lib/validates_timeliness/validator.rb
+- lib/validates_timeliness/version.rb
+- lib/validates_timeliness.rb
+- spec/action_view/instance_tag_spec.rb
+- spec/active_record/attribute_methods_spec.rb
+- spec/active_record/multiparameter_attributes_spec.rb
+- spec/formats_spec.rb
+- spec/ginger_scenarios.rb
+- spec/parser_spec.rb
+- spec/resources/application.rb
+- spec/resources/person.rb
+- spec/resources/schema.rb
+- spec/resources/sqlite_patch.rb
+- spec/spec/rails/matchers/validate_timeliness_spec.rb
+- spec/spec_helper.rb
+- spec/time_travel/MIT-LICENSE
+- spec/time_travel/time_extensions.rb
+- spec/time_travel/time_travel.rb
+- spec/validator_spec.rb
+has_rdoc: true
+homepage: http://github.com/adzap/validates_timeliness
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+requirements: []
+
+rubyforge_project: validatestime
+rubygems_version: 1.3.5
+signing_key: 
+specification_version: 3
+summary: Date and time validation plugin for Rails 2.x which allows custom formats
+test_files: []
+

@@ -35,4 +35,35 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def assign_valid_value(model, variable, value)
+    method = variable.to_s + '='
+    model.send(method, value)
+    return false unless model.save && !model.errors.invalid?(value)
+
+    # If we are here then the test above passed
+    return true
+  end
+
+  def assign_invalid_value(model, variable, value)
+    method = variable.to_s + '='
+    model.send(method, value)
+    return false unless !model.save || model.errors.invalid?(value)
+
+    # If we are here then the test above passed
+    return true
+  end
+
+  def setup_authenticated_user_with_permission user, permission
+    user = users(user)
+    role = roles(:one)
+    perm = permissions(permission)
+
+    role.permissions << perm
+    role.users << user
+    role.save!
+    user.reload
+
+    @request.session[:userid] = user.userid
+  end
 end
