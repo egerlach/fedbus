@@ -1,6 +1,5 @@
 class TripsController < ApplicationController
 
-  before_filter :login_required, :except => [:index, :show]
   before_filter permission_required(:trips), :except => [:index, :show]
 
   # GET /trips

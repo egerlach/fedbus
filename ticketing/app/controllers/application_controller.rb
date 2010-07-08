@@ -4,7 +4,7 @@
 class ApplicationController < ActionController::Base
   include Authorization::ControllerMixin
   helper :all # include all helpers, all the time
-  helper_method :current_user, :logged_in?, :permission_required
+  helper_method :current_user, :logged_in?
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
     logged_in? || access_denied
   end
 
-  def access_denied()
+  def access_denied
     store_location
     if session[:userid]
       redirect_to :new_user

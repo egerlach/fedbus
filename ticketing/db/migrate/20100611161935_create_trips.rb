@@ -7,7 +7,7 @@ class CreateTrips < ActiveRecord::Migration
       t.time :departure
       t.time :arrival
       t.time :return
-      t.float :ticket_price
+      t.decimal :ticket_price
       t.integer :sales_lead
       t.text :comment
       t.integer :return_trip
