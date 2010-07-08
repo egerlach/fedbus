@@ -1,0 +1,37 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  description: MyString
+  departure: 2010-06-22 13:05:37
+  arrival: 2010-06-22 13:05:37
+  return: 2010-06-22 13:05:37
+  ticket_price: 1.5
+  sales_lead: 1
+  comment: MyText
+  status: MyText
+  direction: from_waterloo
+
+two:
+  name: MyString
+  description: MyString
+  departure: 2010-06-22 13:05:37
+  arrival: 2010-06-22 13:05:37
+  return: 2010-06-22 13:05:37
+  ticket_price: 1.5
+  sales_lead: 1
+  comment: MyText
+  status: MyText
+  direction: from_waterloo
+
+valid:
+  name: MyString
+  description: MyString
+  departure: 2010-06-22 13:05:37
+  arrival: 2010-06-22 13:05:37
+  return: 2010-06-22 13:05:37
+  ticket_price: 1.5
+  sales_lead: 1
+  comment: MyText
+  status: open
+  direction: from_waterloo

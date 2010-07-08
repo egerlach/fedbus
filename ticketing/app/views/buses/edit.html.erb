@@ -1,0 +1,13 @@
+<h1>Editing bus</h1>
+
+<% form_for(@bus) do |f| %>
+
+  <%= render :partial => "form", :locals => {:f => f} %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @bus %> |
+<%= link_to 'Back', buses_path %>
