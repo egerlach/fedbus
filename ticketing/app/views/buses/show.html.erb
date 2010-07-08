@@ -1,0 +1,52 @@
+<p>
+  <b>Name:</b>
+  <%=h @bus.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @bus.description %>
+</p>
+
+<p>
+  <b>Departure:</b>
+  <%=h @bus.departure %>
+</p>
+
+<p>
+  <b>Arrival:</b>
+  <%=h @bus.arrival %>
+</p>
+
+<p>
+  <b>Return:</b>
+  <%=h @bus.return %>
+</p>
+
+<p>
+  <b>Ticket price:</b>
+  <%=h @bus.ticket_price %>
+</p>
+
+<p>
+  <b>Sales lead:</b>
+  <%=h @bus.sales_lead %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%=h @bus.comment %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @bus.status.to_s.humanize %>
+</p>
+
+<p>
+  <b>Direction:</b>
+  <%=h @bus.direction.to_s.humanize %>
+</p>
+
+<%= link_to 'Edit', edit_bus_path(@bus) %> |
+<%= link_to 'Back', buses_path %>

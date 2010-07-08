@@ -1,0 +1,42 @@
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :departure %><br />
+    <%= f.datetime_select :departure %>
+  </p>
+  <p>
+    <%= f.label :arrival %><br />
+    <%= f.datetime_select :arrival %>
+  </p>
+  <p>
+    <%= f.label :return %><br />
+    <%= f.datetime_select :return %>
+  </p>
+  <p>
+    <%= f.label :ticket_price %><br />
+    <%= f.text_field :ticket_price %>
+  </p>
+  <p>
+    <%= f.label :sales_lead %><br />
+    <%= f.text_field :sales_lead %>
+  </p>
+  <p>
+    <%= f.label :comment %><br />
+    <%= f.text_area :comment %>
+  </p>
+  <p>
+    <%= f.label :status %><br />
+    <%= f.select :status, Bus::STATUSES.collect {|x| [x.to_s.humanize, x]} %>
+  </p>
+  <p>
+    <%= f.label :direction %><br />
+    <%= f.select :direction, Bus::DIRECTIONS.collect {|x| [x.to_s.humanize, x]} %>
+  </p>

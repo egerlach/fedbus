@@ -1,8 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :trips
-
+  map.resources :buses
   map.resources :permissions
-
   map.resources :roles
   map.resources :users
 
