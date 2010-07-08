@@ -146,6 +146,9 @@ class TripsControllerTest < ActionController::TestCase
   test "should generate 5 buses from trips fixtures one, friday, sunday and long_trip" do
     setup_authenticated_user_with_permission :tester, :trips
 
+    # Stop any blackouts from interfering
+    Blackout.destroy_all
+
     # Five buses should have been created
     assert_difference('Bus.count', 5) {
       get :generate
@@ -155,6 +158,9 @@ class TripsControllerTest < ActionController::TestCase
   test "should not generate buses from trips if they already exist" do
     setup_authenticated_user_with_permission :tester, :trips
 
+    # Stop any blackouts from interfering
+    Blackout.destroy_all
+
     # Five buses should have been created
     assert_difference('Bus.count', 5) {
       get :generate
@@ -162,6 +168,14 @@ class TripsControllerTest < ActionController::TestCase
 
     # Zero buses should be created when they already exist
     assert_difference('Bus.count', 0) {
+      get :generate
+    }
+  end
+
+  test "should not create buses during a scheduled blackout period" do
+    setup_authenticated_user_with_permission :tester, :trips
+
+    assert_difference('Bus.count', 1) {
       get :generate
     }
   end

@@ -14,3 +14,7 @@ trips:
 
 manage_access_control:
   name: Manage access control
+
+blackouts:
+  name: Blackouts
+

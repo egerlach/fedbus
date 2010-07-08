@@ -58,11 +58,16 @@ class ActiveSupport::TestCase
   def setup_authenticated_user_with_permission user, permission
     user = users(user)
     role = roles(:one)
-    perm = permissions(permission)
 
-    role.permissions << perm
+    perms = [permission]
+    perms.flatten.each { |p|
+      perm = permissions(p)
+      role.permissions << perm
+    }
+
     role.users << user
     role.save!
+
     user.reload
 
     @request.session[:userid] = user.userid

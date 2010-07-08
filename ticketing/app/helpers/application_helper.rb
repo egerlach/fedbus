@@ -9,4 +9,13 @@ module ApplicationHelper
   def datetime_to_strtime date_time
     date_time.strftime("%H:%M")
   end
+
+  def datetime_to_str date_time
+    date_time.strftime("%Y-%m-%d %H:%M")
+  end
+
+  def date_to_str date
+    date.strftime("%Y-%m-%d")
+  end
+
 end

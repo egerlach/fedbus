@@ -115,7 +115,10 @@ class TripsController < ApplicationController
       d += 7 if d < 0
 
       (0..n-1).each { |n|
-        t.buses << Bus.new_from_trip(t, Date.today+d+7*n) if (t.buses.select{ |b| t1+d+n*7 < b.departure && t2+d+n*7 > b.departure }).count < 1
+        if (t.buses.select{ |b| t1+d+n*7 < b.departure && t2+d+n*7 > b.departure }).count < 1
+          b = Bus.new_from_trip(t, Date.today+d+7*n) 
+          t.buses << b if !Blackout.blackedout?(b.departure)
+        end
       }
     }
 

@@ -1,0 +1,18 @@
+<p>
+  <b>Start:</b>
+  <%=h date_to_str @blackout.start %>
+</p>
+
+<p>
+  <b>Expiry:</b>
+  <%=h date_to_str @blackout.expiry %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%=h @blackout.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_blackout_path(@blackout) %> |
+<%= link_to 'Back', blackouts_path %>

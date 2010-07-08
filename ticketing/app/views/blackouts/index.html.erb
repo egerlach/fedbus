@@ -1,0 +1,24 @@
+<h1>Listing blackouts</h1>
+
+<table>
+  <tr>
+    <th>Start</th>
+    <th>Expiry</th>
+    <th>Comment</th>
+  </tr>
+
+<% @blackouts.each do |blackout| %>
+  <tr>
+    <td><%=h date_to_str blackout.start %></td>
+    <td><%=h date_to_str blackout.expiry %></td>
+    <td><%=h blackout.comment %></td>
+    <td><%= link_to 'Show', blackout %></td>
+    <td><%= link_to 'Edit', edit_blackout_path(blackout) %></td>
+    <td><%= link_to 'Destroy', blackout, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New blackout', new_blackout_path %>

@@ -1,0 +1,12 @@
+<h1>Editing blackout</h1>
+
+<% form_for(@blackout) do |f| %>
+  <%= render :partial => "form", :locals => { :f => f } %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @blackout %> |
+<%= link_to 'Back', blackouts_path %>
