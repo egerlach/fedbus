@@ -10,6 +10,7 @@ class CreateBuses < ActiveRecord::Migration
       t.text :comment
       t.string :status
       t.string :direction
+      t.integer :sales_lead
 
       t.timestamps
     end
