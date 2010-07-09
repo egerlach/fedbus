@@ -23,7 +23,7 @@ class Bus < ActiveRecord::Base
       :maximum_seats => 50,
       :departure => cat_date_time(dep_date, trip.departure)
                  }
-      )
+      )    
 
     if trip.departure < trip.arrival 
       b.arrival = cat_date_time(dep_date, trip.arrival)

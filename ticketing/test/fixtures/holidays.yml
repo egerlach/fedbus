@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2010-07-09
+  trip_offset: 1
+  comment: MyText
+
+two:
+  date: <%= Date.today %>
+  trip_offset: 1
+  comment: MyText

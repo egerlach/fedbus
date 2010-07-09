@@ -2,6 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/trips/generate', :controller => :trips, :action => :generate
 
   map.resources :blackouts
+  map.resources :holidays
   map.resources :trips
   map.resources :buses
   map.resources :permissions

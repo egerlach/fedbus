@@ -1,0 +1,18 @@
+<p>
+  <b>Date:</b>
+  <%=h @holiday.date %>
+</p>
+
+<p>
+  <b>Trip offset:</b>
+  <%=h @holiday.trip_offset %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%=h @holiday.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_holiday_path(@holiday) %> |
+<%= link_to 'Back', holidays_path %>
