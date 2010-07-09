@@ -20,7 +20,8 @@ class BusesControllerTest < ActionController::TestCase
         :departure => Time.now,
         :arrival => Time.now,
         :return => Time.now,
-        :direction => :both_directions
+        :direction => :both_directions,
+        :maximum_seats => 48
       }
     end
 

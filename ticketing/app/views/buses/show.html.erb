@@ -48,5 +48,10 @@
   <%=h @bus.direction.to_s.humanize %>
 </p>
 
+<p>
+  <b>Maximum Seats:</b>
+  <%=h @bus.maximum_seats %>
+</p>
+
 <%= link_to 'Edit', edit_bus_path(@bus) %> |
 <%= link_to 'Back', buses_path %>

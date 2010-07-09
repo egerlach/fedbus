@@ -11,6 +11,7 @@ class CreateBuses < ActiveRecord::Migration
       t.string :status
       t.string :direction
       t.integer :sales_lead
+      t.integer :maximum_seats
 
       t.timestamps
     end

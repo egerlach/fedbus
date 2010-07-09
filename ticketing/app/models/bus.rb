@@ -7,6 +7,8 @@ class Bus < ActiveRecord::Base
 
   validates_length_of :name, :minimum => 1
 
+  validates_numericality_of :maximum_seats, :greater_than_or_equal_to => 0
+
   validates_datetime :departure
   validates_datetime :arrival, :on_or_after => :departure
   validates_datetime :return, :on_or_after => :arrival
