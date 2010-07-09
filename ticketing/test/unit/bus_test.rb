@@ -93,4 +93,21 @@ class BusTest < ActiveSupport::TestCase
     b.name = 'Something'
     assert b.valid?, "Bus should accept any name"
   end
+
+  test "Bus maximum seats should be zero or greater" do
+    b = buses(:valid)
+    b.maximum_seats = -2
+    assert b.invalid?
+    assert b.errors.invalid?(:maximum_seats)
+
+    b.maximum_seats = "foobar!"
+    assert b.invalid?
+    assert b.errors.invalid?(:maximum_seats)
+
+    b.maximum_seats = 0
+    assert b.valid?
+
+    b.maximum_seats = 48
+    assert b.valid?
+  end
 end

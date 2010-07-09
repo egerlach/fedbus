@@ -12,6 +12,7 @@
     <th>Comment</th>
     <th>Status</th>
     <th>Direction</th>
+    <th>Max. Seats</th>
   </tr>
 
 <% @buses.each do |bus| %>
@@ -26,6 +27,7 @@
     <td><%=h bus.comment %></td>
     <td><%=h bus.status.to_s.humanize %></td>
     <td><%=h bus.direction.to_s.humanize %></td>
+    <td><%=h bus.maximum_seats %></td>
     <td><%= link_to 'Show', bus %></td>
     <td><%= link_to 'Edit', edit_bus_path(bus) %></td>
     <td><%= link_to 'Destroy', bus, :confirm => 'Are you sure?', :method => :delete %></td>

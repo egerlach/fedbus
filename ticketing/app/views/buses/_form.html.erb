@@ -40,3 +40,7 @@
     <%= f.label :direction %><br />
     <%= f.select :direction, Bus::DIRECTIONS.collect {|x| [x.to_s.humanize, x]} %>
   </p>
+  <p>
+    <%= f.label :maximum_seats %><br />
+    <%= f.text_field :maximum_seats %>
+  </p>
