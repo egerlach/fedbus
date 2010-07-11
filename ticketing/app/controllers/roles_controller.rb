@@ -1,4 +1,6 @@
 class RolesController < ApplicationController
+  before_filter permission_required(:manage_access_control), :except => [:index, :show]
+
   # GET /roles
   # GET /roles.xml
   def index

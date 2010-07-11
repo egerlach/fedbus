@@ -2,6 +2,8 @@ module Authorization
   # Include this mixin in a controller class to make authorization methods available.
   # Most likely, this will simply be included in ApplicationController.
   module ControllerMixin
+    # Causes Authorization::ControllerMixin::ClassMethods to be pulled in
+    # as class methods.
     def self.included(base)
       base.extend(ClassMethods)
     end
@@ -17,13 +19,14 @@ module Authorization
     module ClassMethods
 
       # Intended to be used with before_filter to ensure that users have
-      # the permission required to perform an action
+      # the permission required to perform an action.
+      #
       # Example:
       #
-      # class MyController < ApplicationController
-      #   before_filter permission_required(:eat_cake), :except => [:index, :show]
-      #   (...)
-      # end
+      #  class MyController < ApplicationController
+      #    before_filter permission_required(:eat_cake), :except => [:index, :show]
+      #    (...)
+      #  end
       def permission_required(permission)
         Proc.new do |controller|
           if controller.logged_in?

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-
-  before_filter :login_required, :only => :index
+  # Only authorized users should be able to access anything but their own user
+  before_filter permission_required(:manage_access_control), :except => [:login, :logout, :new, :create],
+                :unless => lambda { |c| c.current_user.to_param == c.params[:id] }
 
   # GET /users
   # GET /users.xml
@@ -72,7 +73,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      # Update the user's attributes, bypassing protections if the current user has
+      # the appropriate permission to manage access control.
+      protection_enabled = ! current_user.has_permission?(:manage_access_control)
+      @user.send(:attributes=, params[:user], protection_enabled)
+
+      if @user.save
         flash[:notice] = 'User was successfully updated.'
         format.html { redirect_to(@user) }
         format.xml  { head :ok }

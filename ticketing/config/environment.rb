@@ -9,6 +9,7 @@ RAILS_GEM_VERSION = '2.2.3' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+require 'file_ext'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -58,7 +59,7 @@ Rails::Initializer.run do |config|
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
     :session_key => '_fedbus_session',
-    :secret      => '8fee948bb7f7d4efe8c826f058f4dee8927f6f08c9521615b31e8c3115e360fe883e5b40d381429a7781a51395af7f18975d109d3b9eea7cce562f5d5731b2aa'
+    :secret      => File.read_or_create(File.join(Rails.root, "config", "session_secret")) { |f| f.write(ActiveSupport::SecureRandom.hex(64)) }
   }
 
   # Use the database for sessions instead of the cookie-based default,
