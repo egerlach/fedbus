@@ -4,10 +4,13 @@ one:
   name: MyString
 
 two:
-  name: MyString
+  name: MyString2
 
 eat_cake:
   name: Eat cake
 
 trips:
   name: Trips
+
+manage_access_control:
+  name: Manage access control

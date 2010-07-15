@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # Only authorized users should be able to access anything but their own user
   before_filter permission_required(:manage_access_control), :except => [:login, :logout, :new, :create],
-                :unless => lambda { |c| c.current_user.to_param == c.params[:id] }
+                :unless => lambda { |c| c.logged_in? && c.current_user.to_param == c.params[:id] }
 
   # GET /users
   # GET /users.xml

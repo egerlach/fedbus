@@ -35,6 +35,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  include Authorization::TestHelper
 
   def assign_valid_value(model, variable, value)
     method = variable.to_s + '='
