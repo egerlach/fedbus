@@ -1,13 +1,49 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  name: MyString
-  destination: MyString
-  weekday: 1
-  departure: 12:19:35
-  arrival: 12:19:35
-  return: 12:19:35
+  name: One
+  destination: Aperture Science Cake Party
+  weekday: <%= (DateTime.now.wday + 5) % 7 %>
+  departure: 2000-01-01 20:00:00
+  arrival: 2000-01-01 00:00:00
+  return: 2000-01-01 02:00:00
   ticket_price: 1.5
-  sales_lead: 1
-  comment: MyText
-  return_trip: 1
+  sales_lead: 5
+  comment:
+  return_trip: 2
+
+friday:
+  name: Friday Bus
+  destination: Aperture Science Cake Party
+  weekday: <%= (DateTime.now.wday + 5) % 7 %>
+  departure: 2000-01-01 20:00:00
+  arrival: 2000-01-01 00:00:00
+  return: 2000-01-01 02:00:00
+  ticket_price: 1.5
+  sales_lead: 14
+  comment:
+  return_trip: 2
+
+sunday:
+  name: Sunday Bus
+  destination: Aperture Science Lab
+  weekday: <%= DateTime.now.wday %>
+  departure: 2000-01-01 20:00:00
+  arrival: 2000-01-01 10:00:00
+  return: 2000-01-01 12:00:00
+  ticket_price: 1.5
+  sales_lead: 7
+  comment:
+  return_trip: -2
+
+long_trip:
+  name: Uber Trip
+  destination: Aperture Science Lab
+  weekday: <%= DateTime.now.wday %>
+  departure: 2000-01-01 20:00:00
+  arrival: 2000-01-01 06:00:00
+  return: 2000-01-01 04:00:00
+  ticket_price: 1.5
+  sales_lead: 7
+  comment:
+  return_trip: -2

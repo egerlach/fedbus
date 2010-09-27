@@ -88,9 +88,45 @@ class TripsController < ApplicationController
     end
   end
 
+  # GET /trips/generate
+  def generate
+    @trips = Trip.all
+
+    # Create Buses from trips that are within the sales_lead of now
+    now = DateTime.now
+
+    t1 = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T00:00:00", "%FT%T")
+    t2 = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T23:59:59", "%FT%T")
+
+    # Create Buses if a Trip has no Bus for the current cycle
+    @trips.each { |t|
+      # How many buses should exist into the future?
+      if t.weekday - now.wday < 0
+        n = (t.sales_lead/7).floor + (t.weekday - now.wday + 7 >= t.sales_lead ? 1 : 0)
+      else
+        n = (t.sales_lead/7).floor + (t.weekday - now.wday >= t.sales_lead ? 1 : 0)
+      end
+
+      next if n < 1
+
+      # Are there buses on each day there need to be?
+      # If not create them
+      d = t.weekday - now.wday
+      d += 7 if d < 0
+
+      (0..n-1).each { |n|
+        t.buses << Bus.new_from_trip(t, Date.today+d+7*n) if (t.buses.select{ |b| t1+d+n*7 < b.departure && t2+d+n*7 > b.departure }).count < 1
+      }
+    }
+
+    # Redirect the user back to trips
+    respond_to { |format|
+      format.html { redirect_to(trips_path) }
+      format.xml  { reditect_to(trips_path) } 
+    }
+  end
 
   # Helper functions
-
   # We have to convert the two posted values for each time into a single string
   # If we don't Trip.new and Trip.update_attributes can't populate the Trips
   # values based on the post hash

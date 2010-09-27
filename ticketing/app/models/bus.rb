@@ -12,4 +12,45 @@ class Bus < ActiveRecord::Base
   validates_datetime :departure
   validates_datetime :arrival, :on_or_after => :departure
   validates_datetime :return, :on_or_after => :arrival
+
+  belongs_to :trip
+
+  def self.new_from_trip trip, dep_date
+    b = Bus.new( {
+      :status => :open,
+      :direction => :both_directions,
+      :name => trip.name,
+      :maximum_seats => 50,
+      :departure => cat_date_time(dep_date, trip.departure)
+                 }
+      )
+
+    if trip.departure < trip.arrival 
+      b.arrival = cat_date_time(dep_date, trip.arrival)
+    else 
+      dep_date += 1
+      b.arrival = cat_date_time(dep_date, trip.arrival)
+    end
+
+    if trip.arrival < trip.return
+      b.return = cat_date_time(dep_date, trip.return )
+    else
+      b.return = cat_date_time(dep_date + 1, trip.return )
+    end
+
+    return b
+
+    # Make sure that departure < arrival < return
+  end
+
+  def to_s
+    "Bus: " + name + " " + status.to_s.humanize + " " + direction.to_s.humanize + " " + maximum_seats.to_s + " " + departure.to_s + " " + arrival.to_s + " " + self.return.to_s
+  end
+
+  private
+
+  def self.cat_date_time date, time
+    DateTime.strptime(date.to_s + time.strftime("T%H:%M:%S"), "%FT%H:%M:%S")
+  end
+
 end

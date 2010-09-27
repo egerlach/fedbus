@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.connect '/trips/generate', :controller => :trips, :action => :generate
+
   map.resources :trips
   map.resources :buses
   map.resources :permissions
