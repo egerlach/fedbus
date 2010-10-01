@@ -15,15 +15,20 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
 
+  # Stores a location to return to later (especially after login via CAS).
+  # If not given a parameter, it defaults to the current request URI.
   def store_location(return_to = nil)
     session[:return_to] = return_to || request.request_uri
   end
 
+  # Redirects the user to the previously-stored location, or, if none
+  # can be found, some fallback URL.
   def redirect_back_or_default(default)
     redirect_to session[:return_to] || default
     session[:return_to] = nil
   end
 
+  # Returns the currently logged in User.
   def current_user
     @current_user ||=
       if session[:userid]
@@ -31,14 +36,19 @@ class ApplicationController < ActionController::Base
       end
   end
 
+  # Returns a boolean indicating whether the client is an authenticated user.
   def logged_in?
     !!current_user
   end
 
+  # Redirects the user to log in or register an account unless the user is
+  # already logged in.
   def login_required
     logged_in? || access_denied
   end
 
+  # Stores the current location and redirects the user to either a login
+  # page or an account creation page, as appropriate.
   def access_denied
     store_location
     if session[:userid]

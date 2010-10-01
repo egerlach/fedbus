@@ -20,9 +20,12 @@
   <%= f.label :student_number_confirmation %><br />
   <%= f.password_field :student_number_confirmation %>
 </p>
+
+<% if logged_in? && current_user.has_permission?(:manage_access_control) %>
 <p>
   Roles<br />
   <% for role in Role.all %>
     <%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id) %><%= role.name %><br />
   <% end %>
 </p>
+<% end %>

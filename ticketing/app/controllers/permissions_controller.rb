@@ -1,4 +1,6 @@
 class PermissionsController < ApplicationController
+  before_filter permission_required(:manage_access_control), :except => [:index, :show]
+
   # GET /permissions
   # GET /permissions.xml
   def index

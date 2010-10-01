@@ -4,10 +4,26 @@ class UsersControllerTest < ActionController::TestCase
 
   fixtures :users, :roles
 
+  test "should disallow anonymous user listing" do
+    login_as :anonymous do
+      get :index
+      assert_redirected_to login_path
+    end
+  end
+
+  test "should disallow unauthorized user listing" do
+    login_as users(:one) do
+      get :index
+      assert_response :forbidden
+    end
+  end
+
   test "should get index" do
-    get :index, nil, {:userid => 'test'}
-    assert_response :success
-    assert_not_nil assigns(:users)
+    with_permission :manage_access_control do
+      get :index
+      assert_response :success
+      assert_not_nil assigns(:users)
+    end
   end
 
   test "should get new" do
@@ -47,27 +63,120 @@ class UsersControllerTest < ActionController::TestCase
     assert User.find_by_userid('evil').nil?
   end
 
-  test "should show user" do
-    get :show, :id => users(:one).to_param
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get :edit, :id => users(:one).to_param
-    assert_response :success
-  end
-
-  test "should update user" do
-    put :update, :id => users(:one).to_param, :user => { }
-    assert_redirected_to user_path(assigns(:user))
-  end
-
-  test "should destroy user" do
-    assert_difference('User.count', -1) do
-      delete :destroy, :id => users(:one).to_param
+  test "should disallow anonymous user display" do
+    login_as :anonymous do
+      get :show, :id => users(:one).to_param
+      assert_redirected_to login_path
     end
+  end
 
-    assert_redirected_to users_path
+  test "should disallow unauthorized user display" do
+    login_as users(:two) do
+      get :show, :id => users(:one).to_param
+      assert_response :forbidden
+    end
+  end
+
+  test "should allow display of own user" do
+    login_as users(:one) do
+      get :show, :id => users(:one).to_param
+      assert_response :success
+    end
+  end
+
+  test "should allow authorized user display" do
+    with_permission :manage_access_control do
+      get :show, :id => users(:one).to_param
+      assert_response :success
+    end
+  end
+
+  test "should disallow anonymous user editing" do
+    login_as :anonymous do
+      get :edit, :id => users(:one).to_param
+      assert_redirected_to login_path
+    end
+  end
+
+  test "should disallow unauthorized user editing" do
+    login_as users(:two) do
+      get :edit, :id => users(:one).to_param
+      assert_response :forbidden
+    end
+  end
+
+  test "should allow editing of own user" do
+    login_as users(:one) do
+      get :edit, :id => users(:one).to_param
+      assert_response :success
+    end
+  end
+
+  test "should allow authorized user editing" do
+    with_permission :manage_access_control do
+      get :edit, :id => users(:one).to_param
+      assert_response :success
+    end
+  end
+
+  test "should disallow anonymous user updates" do
+    login_as :anonymous do
+      put :update, :id => users(:one).to_param, :user => { }
+      assert_redirected_to login_path
+    end
+  end
+
+  test "should disallow unauthorized user updates" do
+    login_as users(:two) do
+      put :update, :id => users(:one).to_param, :user => { }
+      assert_response :forbidden
+    end
+  end
+
+  test "should allow updating of own user" do
+    login_as users(:one) do
+      put :update, :id => users(:one).to_param, :user => { }
+      assert_redirected_to user_path(assigns(:user))
+    end
+  end
+
+  test "should allow authorized user updates" do
+    with_permission :manage_access_control do
+      put :update, :id => users(:one).to_param, :user => { }
+      assert_redirected_to user_path(assigns(:user))
+    end
+  end
+
+  test "should disallow anonymous user destruction" do
+    login_as :anonymous do
+      assert_difference('User.count', 0) do
+        delete :destroy, :id => users(:one).to_param
+      end
+    end
+  end
+
+  test "should disallow unauthorized user destruction" do
+    login_as users(:two) do
+      assert_difference('User.count', 0) do
+        delete :destroy, :id => users(:one).to_param
+      end
+    end
+  end
+
+  test "should allow user self-destruction" do
+    login_as users(:one) do
+      assert_difference('User.count', -1) do
+        delete :destroy, :id => users(:one).to_param
+      end
+    end
+  end
+
+  test "should allow authorized user destruction" do
+    with_permission :manage_access_control do
+      assert_difference('User.count', -1) do
+        delete :destroy, :id => users(:two).to_param
+      end
+    end
   end
 
   test "login should redirect to CAS if not logged in" do
@@ -113,11 +222,19 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to "https://cas.uwaterloo.ca/cas/logout"
   end
 
-  test "should assign roles" do
-    assert_difference('users(:one).roles.count', 1) do
-      put :update, :id => users(:one).to_param, :user => {:role_ids => [roles(:one).id]}
+  test "should not assign roles to self without authorization" do
+    login_as users(:one) do
+      assert_difference('users(:one).roles.count', 0) do
+        put :update, :id => users(:one).to_param, :user => {:role_ids => [roles(:one).id]}
+      end
     end
+  end
 
-    assert_redirected_to user_path(assigns(:user))
+  test "should assign roles with authorization" do
+    with_permission :manage_access_control do
+      assert_difference('users(:one).roles.count', 1) do
+        put :update, :id => users(:one).to_param, :user => {:role_ids => [roles(:one).id]}
+      end
+    end
   end
 end
