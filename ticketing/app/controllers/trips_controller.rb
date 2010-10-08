@@ -95,31 +95,32 @@ class TripsController < ApplicationController
     # Create Buses from trips that are within the sales_lead of now
     now = DateTime.now
 
-    t1 = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T00:00:00", "%FT%T")
-    t2 = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T23:59:59", "%FT%T")
+    day_start = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T00:00:00", "%FT%T")
+    day_end   = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T23:59:59", "%FT%T")
 
     # Create Buses if a Trip has no Bus for the current cycle
-    @trips.each { |t|
+    @trips.each { |trip|
       # How many buses should exist into the future?
-      if t.weekday - now.wday < 0
-        n = (t.sales_lead/7).floor + (t.weekday - now.wday + 7 >= t.sales_lead ? 1 : 0)
+      if trip.weekday - now.wday < 0
+        buses = (trip.sales_lead/7).floor + (trip.weekday - now.wday + 7 >= trip.sales_lead ? 1 : 0)
       else
-        n = (t.sales_lead/7).floor + (t.weekday - now.wday >= t.sales_lead ? 1 : 0)
+        buses = (trip.sales_lead/7).floor + (trip.weekday - now.wday >= trip.sales_lead ? 1 : 0)
       end
 
-      next if n < 1
+      next if buses < 1
 
       # Are there buses on each day there need to be?
       # If not create them
-      d = t.weekday - now.wday
-      d += 7 if d < 0
+      trip_offset = trip.weekday - now.wday
+      trip_offset += 7 if trip_offset < 0
 
-      (0..n-1).each { |n|
-        ho = Holiday.offset(Date.strptime((t1+d+n*7).strftime("%Y-%m-%d")))
+      (0..buses-1).each { |week|
+        ho = Holiday.offset(Date.strptime((day_start+trip_offset+week*7).strftime("%Y-%m-%d")))
 
-        if (t.buses.select{ |b| t1+d+n*7+ho < b.departure && t2+d+n*7+ho > b.departure }).count < 1
-          b = Bus.new_from_trip(t, Date.today+d+7*n+ho) 
-          t.buses << b if !Blackout.blackedout?(b.departure)
+        if (trip.buses.select{ |b| day_start + trip_offset + week*7 + ho < b.departure && 
+                                day_end   + trip_offset + week*7 + ho > b.departure }).count < 1
+          b = Bus.new_from_trip(trip, Date.today + trip_offset + week*7 + ho) 
+          trip.buses << b if !Blackout.blackedout?(b.departure)
         end
       }
     }
