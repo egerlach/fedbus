@@ -1,0 +1,18 @@
+<p>
+  <b>Start date:</b>
+  <%=h @reading_week.start_date %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%=h @reading_week.end_date %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%=h @reading_week.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_reading_week_path(@reading_week) %> |
+<%= link_to 'Back', reading_weeks_path %>

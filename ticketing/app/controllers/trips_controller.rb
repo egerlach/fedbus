@@ -99,7 +99,7 @@ class TripsController < ApplicationController
     day_end   = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T23:59:59", "%FT%T")
 
     # Create Buses if a Trip has no Bus for the current cycle
-    @trips.each { |trip|
+    @trips.each do |trip|
       # How many buses should exist into the future?
       if trip.weekday - now.wday < 0
         buses = (trip.sales_lead/7).floor + (trip.weekday - now.wday + 7 >= trip.sales_lead ? 1 : 0)
@@ -114,16 +114,25 @@ class TripsController < ApplicationController
       trip_offset = trip.weekday - now.wday
       trip_offset += 7 if trip_offset < 0
 
-      (0..buses-1).each { |week|
-        ho = Holiday.offset(Date.strptime((day_start+trip_offset+week*7).strftime("%Y-%m-%d")))
+      (0..buses-1).each do |week|
+        trip_date = Date.strptime((day_start+trip_offset+week*7).strftime("%Y-%m-%d"))
+        holiday_offset = Holiday.offset(trip_date)
+        reading_offset = ReadingWeek.offset(trip_date)
 
-        if (trip.buses.select{ |b| day_start + trip_offset + week*7 + ho < b.departure && 
-                                day_end   + trip_offset + week*7 + ho > b.departure }).count < 1
-          b = Bus.new_from_trip(trip, Date.today + trip_offset + week*7 + ho) 
-          trip.buses << b if !Blackout.blackedout?(b.departure)
+        # If a holiday and a reading week are both there, choose the one that moves the trip more, though this should never happen.
+        exception_offset = if holiday_offset.abs > reading_offset.abs
+                             holiday_offset
+                           else
+                             reading_offset
+                           end
+
+        if (trip.buses.select{ |b| day_start + trip_offset + week*7 + exception_offset < b.departure && 
+                                day_end   + trip_offset + week*7 + exception_offset > b.departure }).count < 1
+          b = Bus.new_from_trip(trip, Date.today + trip_offset + week*7 + exception_offset) 
+          trip.buses << b unless Blackout.blackedout?(b.departure) or ReadingWeek.blackedout?(b.departure)
         end
-      }
-    }
+      end
+    end
 
     # Redirect the user back to trips
     respond_to { |format|

@@ -1,0 +1,24 @@
+<h1>Listing reading_weeks</h1>
+
+<table>
+  <tr>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Comment</th>
+  </tr>
+
+<% @reading_weeks.each do |reading_week| %>
+  <tr>
+    <td><%=h reading_week.start_date %></td>
+    <td><%=h reading_week.end_date %></td>
+    <td><%=h reading_week.comment %></td>
+    <td><%= link_to 'Show', reading_week %></td>
+    <td><%= link_to 'Edit', edit_reading_week_path(reading_week) %></td>
+    <td><%= link_to 'Destroy', reading_week, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New reading_week', new_reading_week_path %>

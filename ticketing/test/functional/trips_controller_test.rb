@@ -149,6 +149,7 @@ class TripsControllerTest < ActionController::TestCase
     # Stop any blackouts or holidays from interfering
     Blackout.destroy_all
     Holiday.destroy_all
+    ReadingWeek.destroy_all
 
     # Five buses should have been created
     assert_difference('Bus.count', 5) {
@@ -162,6 +163,7 @@ class TripsControllerTest < ActionController::TestCase
     # Stop any blackouts or holidays from interfering
     Blackout.destroy_all
     Holiday.destroy_all
+    ReadingWeek.destroy_all
 
     # Five buses should have been created
     assert_difference('Bus.count', 5) {
@@ -179,6 +181,7 @@ class TripsControllerTest < ActionController::TestCase
 
     # Stop any holidays from interfering
     Holiday.destroy_all
+    ReadingWeek.destroy_all
 
     assert_difference('Bus.count', 1) {
       get :generate
@@ -190,6 +193,7 @@ class TripsControllerTest < ActionController::TestCase
 
     # Stop and blackouts from interfering
     Blackout.destroy_all
+    ReadingWeek.destroy_all
 
     assert_difference('Bus.count', 5) {
       get :generate
@@ -201,6 +205,18 @@ class TripsControllerTest < ActionController::TestCase
 
     # Should not create buses that already exist
     assert_difference('Bus.count', 0) {
+      get :generate
+    }
+  end
+
+  test "should not create buses during a reading week" do
+    setup_authenticated_user_with_permission :tester, :trips
+
+    # Stop Holidays and blackouts from interfering
+    Blackout.destroy_all
+    Holiday.destroy_all
+
+    assert_difference('Bus.count', 1) {
       get :generate
     }
   end
