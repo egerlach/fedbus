@@ -21,3 +21,5 @@ blackouts:
 holidays:
   name: Holidays
 
+reading_weeks:
+  name: Reading weeks

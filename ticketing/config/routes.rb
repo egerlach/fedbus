@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  map.connect '/trips/generate', :controller => :trips, :action => :generate
+  map.resources :reading_weeks
 
+  map.resources :reading_weeks
   map.resources :blackouts
   map.resources :holidays
   map.resources :trips
