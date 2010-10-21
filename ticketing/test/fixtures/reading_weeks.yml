@@ -1,11 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  start_date: 2010-10-14
+  start_date: 2010-10-13
+  normal_return_date: 2010-10-14
   end_date: 2010-10-15
   comment: MyText
 
 test:
   start_date: <%= Date.today %>
+  normal_return_date: <%= Date.today + 2 %>
   end_date: <%= Date.today + 7 %>
   comment: MyText

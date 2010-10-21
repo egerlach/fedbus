@@ -2,6 +2,7 @@ class CreateReadingWeeks < ActiveRecord::Migration
   def self.up
     create_table :reading_weeks do |t|
       t.date :start_date
+      t.date :normal_return_date
       t.date :end_date
       t.text :comment
 
