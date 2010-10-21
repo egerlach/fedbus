@@ -110,4 +110,15 @@ class BusTest < ActiveSupport::TestCase
     b.maximum_seats = 48
     assert b.valid?
   end
+
+  test "Bus should report correct date & return date values" do
+    b = buses(:valid)
+    assert_equal b.date, Date.civil(2010, 6, 22)
+
+    b.trip = trips(:one)
+
+    assert !b.trip.nil?
+
+    assert_equal Date.civil(2010, 6, 24), b.return_date
+  end
 end

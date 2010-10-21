@@ -26,7 +26,7 @@ class ReadingWeeksControllerTest < ActionController::TestCase
 
   test "should not create reading_week for an unauthenticated user" do
     assert_difference('ReadingWeek.count', 0) do
-      post :create, :reading_week => { :start_date => "2010-03-04", :end_date => "2010-03-10" }
+      post :create, :reading_week => { :start_date => "2010-03-04", :normal_return_date => "2010-03-06", :end_date => "2010-03-10" }
     end
 
     assert_response :redirect
@@ -35,7 +35,7 @@ class ReadingWeeksControllerTest < ActionController::TestCase
   test "should not create reading_week for an authenticated user without permission" do
     @request.session[:userid] = users(:one).userid
     assert_difference('ReadingWeek.count', 0) do
-      post :create, :reading_week => { :start_date => "2010-03-04", :end_date => "2010-03-10" }
+      post :create, :reading_week => { :start_date => "2010-03-04", :normal_return_date => "2010-03-06", :end_date => "2010-03-10" }
     end
 
     assert_response :forbidden
@@ -45,7 +45,7 @@ class ReadingWeeksControllerTest < ActionController::TestCase
     setup_authenticated_user_with_permission :tester, :reading_weeks
 
     assert_difference('ReadingWeek.count') do
-      post :create, :reading_week => { :start_date => "2010-03-04", :end_date => "2010-03-10" }
+      post :create, :reading_week => { :start_date => "2010-03-04", :normal_return_date => "2010-03-06", :end_date => "2010-03-10" }
     end
 
     assert_redirected_to reading_week_path(assigns(:reading_week))

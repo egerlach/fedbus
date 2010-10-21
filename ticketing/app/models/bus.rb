@@ -43,6 +43,16 @@ class Bus < ActiveRecord::Base
     # Make sure that departure < arrival < return
   end
 
+  def date
+    Date.civil departure.year, departure.month, departure.day
+  end
+
+  def return_date
+    return date if self.trip.nil?
+    return_datetime = date + trip.return_trip
+    Date.civil return_datetime.year, return_datetime.month, return_datetime.day
+  end
+
   def to_s
     "Bus: " + name + " " + status.to_s.humanize + " " + direction.to_s.humanize + " " + maximum_seats.to_s + " " + departure.to_s + " " + arrival.to_s + " " + self.return.to_s
   end
