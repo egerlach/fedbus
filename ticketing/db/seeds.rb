@@ -6,6 +6,7 @@ Permission.find_or_create_by_name("Buses")
 Permission.find_or_create_by_name("Blackouts")
 Permission.find_or_create_by_name("Holidays")
 Permission.find_or_create_by_name("Reading weeks")
+Permission.find_or_create_by_name("View Admin Panel")
 
 # Default roles
 admin = Role.find_or_create_by_name("Administrator")

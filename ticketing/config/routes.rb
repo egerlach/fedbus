@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :permissions
   map.resources :roles
   map.resources :users
+  map.resources :admin
 
   # The priority is based upon order of creation: first created -> highest priority.
 
