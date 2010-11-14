@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :reading_weeks
+  
+  map.connect 'buses/today.:format', :controller => 'buses', :action => 'today'
 
   map.resources :reading_weeks
   map.resources :blackouts

@@ -82,4 +82,13 @@ class BusesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  # GET /buses/today.xml
+  def today
+    @buses = Bus.all(:conditions => {:departure => Date.today...Date.tomorrow})
+
+    respond_to do |format|
+      format.xml { render "today" => @buses } # today.xml.builder
+    end
+  end
 end
