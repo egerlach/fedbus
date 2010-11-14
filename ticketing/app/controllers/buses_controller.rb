@@ -1,4 +1,7 @@
 class BusesController < ApplicationController
+
+  before_filter permission_required(:buses), :except => [:index, :show]
+
   # GET /buses
   # GET /buses.xml
   def index
