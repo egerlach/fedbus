@@ -1,4 +1,4 @@
-module Authorization
+module Authorization 
   # Include this mixin in a controller class to make authorization methods available.
   # Most likely, this will simply be included in ApplicationController.
   module ControllerMixin

@@ -116,7 +116,8 @@ module Rails
     end
 
     def requirement
-      r = version_requirements
+      #r = version_requirements
+		r = @requirement # Old way was deprecated
       (r == Gem::Requirement.default) ? nil : r
     end
 

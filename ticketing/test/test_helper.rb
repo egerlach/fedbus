@@ -1,6 +1,6 @@
 ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'test_help'
+require File.expand_path('../../config/environment', __FILE__)
+require 'rails/test_help'
 
 class ActiveSupport::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
@@ -40,7 +40,7 @@ class ActiveSupport::TestCase
   def assign_valid_value(model, variable, value)
     method = variable.to_s + '='
     model.send(method, value)
-    return false unless model.save && !model.errors.invalid?(value)
+    return false unless model.save! && !model.errors[variable].any?
 
     # If we are here then the test above passed
     return true
@@ -49,7 +49,7 @@ class ActiveSupport::TestCase
   def assign_invalid_value(model, variable, value)
     method = variable.to_s + '='
     model.send(method, value)
-    return false unless !model.save || model.errors.invalid?(value)
+    return false unless !model.save || model.errors[variable].any?
 
     # If we are here then the test above passed
     return true

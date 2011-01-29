@@ -1,6 +1,14 @@
 require 'test_helper'
+require 'logger'
 
 class TripsControllerTest < ActionController::TestCase
+
+	def trip
+		{ "name" => "MyString", "destination" => "MyString", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
+	end
+	def trip2
+		{ "name" => "MyString that is different", "destination" => "MyString that is different", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
+	end
 
   test "should get index for an unauthenticated user" do
     get :index
@@ -61,8 +69,8 @@ class TripsControllerTest < ActionController::TestCase
   test "should create trip for an authenticated user with the trips permission" do
     setup_authenticated_user_with_permission :tester, :trips
     assert_difference('Trip.count') do
-      post :create, :trip => { "name" => "MyString", "destination" => "MyString", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
-    end
+      post :create, :trip => trip
+	 end
 
     assert_redirected_to trip_path(assigns(:trip))
   end
@@ -99,7 +107,7 @@ class TripsControllerTest < ActionController::TestCase
 
   test "should update trip for an authenticated user with the trips permission" do
     setup_authenticated_user_with_permission :tester, :trips
-    put :update, :id => trips(:one).to_param, :trip => { "name" => "MyString that is different", "destination" => "MyString that is different", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
+    put :update, :id => trips(:one).to_param, :trip => trip2
     assert_redirected_to trip_path(assigns(:trip))
   end
 
@@ -182,7 +190,7 @@ class TripsControllerTest < ActionController::TestCase
     # Stop any holidays from interfering
     Holiday.destroy_all
     ReadingWeek.destroy_all
-
+#Rails.logger.info "should not create buses during a scheduled blackout period"
     assert_difference('Bus.count', 1) {
       get :generate
     }
@@ -194,7 +202,8 @@ class TripsControllerTest < ActionController::TestCase
     # Stop and blackouts from interfering
     Blackout.destroy_all
     ReadingWeek.destroy_all
-
+Rails.logger.info "should not create buses from a trip that falls on holiday - offset instead"
+Rails.logger.info "Current bus count: " + Bus.count.to_s
     assert_difference('Bus.count', 5) {
       get :generate
     }
@@ -202,7 +211,7 @@ class TripsControllerTest < ActionController::TestCase
     # Were they created on the correct offset?
     assert Bus.find_by_name("Sunday Bus").departure.strftime("%Y-%m-%d") == (Date.today + 1).strftime("%Y-%m-%d")
     assert Bus.find_by_name("Uber Trip" ).departure.strftime("%Y-%m-%d") == (Date.today + 1).strftime("%Y-%m-%d")
-
+Rails.logger.info "next bus creation"
     # Should not create buses that already exist
     assert_difference('Bus.count', 0) {
       get :generate
@@ -215,10 +224,10 @@ class TripsControllerTest < ActionController::TestCase
     # Stop Holidays and blackouts from interfering
     Blackout.destroy_all
     Holiday.destroy_all
-
-    assert_difference('Bus.count', 1) {
+#Rails.logger.info "should not create buses during a reading week"
+    assert_difference('Bus.count', 2) {
       get :generate
-    }
+    } # Should create "One" bus 5 days from now, and "Uber Trip" 7 days ahead
   end
 
 end

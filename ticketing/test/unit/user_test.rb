@@ -20,41 +20,41 @@ class UserTest < ActiveSupport::TestCase
     u = users(:tester)
     u.email = 'notavalidemail@something'
     assert !u.save, "User accepts an invalid email address: " + u.errors.full_messages.inspect
-    assert u.errors.invalid?(:email)
+    assert u.errors[:email].any?
   end
 
   test "User requires first name" do
     u = users(:tester)
     u.first_name = nil
     assert !u.save, "User accepts an entry without first name: " + u.errors.full_messages.inspect
-    assert u.errors.invalid?(:first_name)
+    assert u.errors[:first_name].any?
   end
 
   test "User requires last name" do
     u = users(:tester)
     u.last_name = nil
     assert !u.save, "User accepts an entry without last name: " + u.errors.full_messages.inspect
-    assert u.errors.invalid?(:last_name)
+    assert u.errors[:last_name].any?
   end
 
   test "User requires email" do
     u = users(:tester)
     u.email = nil
     assert !u.save, "User accepts an entry without email: " + u.errors.full_messages.inspect
-    assert u.errors.invalid?(:email)
+    assert u.errors[:email].any?
   end
 
   test "Setting student_number requires confirmation" do
     u = users(:tester)
     u.student_number = '00000000'
     assert !u.save, "User.student_number can be set without confirmation: " + u.errors.full_messages.inspect
-    assert u.errors.invalid?(:student_number_confirmation)
+    assert u.errors[:student_number_confirmation].any?
 
     u = users(:tester)
     u.student_number = '00000000'
     u.student_number_confirmation = '11111111'
     assert !u.save, "User.student_number can be set with invalid confirmation: " + u.errors.full_messages.inspect
-    assert u.errors.invalid?(:student_number)
+    assert u.errors[:student_number].any?
 
     u = users(:tester)
     u.student_number = '12345678'
@@ -66,7 +66,7 @@ class UserTest < ActiveSupport::TestCase
     u = users(:tester)
     u.userid = nil
     assert !u.save, "User accepts an entry without userid: " + u.errors.full_messages.inspect
-    assert u.errors.invalid?(:userid)
+    assert u.errors[:userid].any?
   end
 
   test "has_permission? should accept symbols" do

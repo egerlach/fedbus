@@ -5,7 +5,7 @@ class Permission < ActiveRecord::Base
   
   #Properly capitalizes the permission name because otherwise we'll get problems elsewhere.
   def name=(new_name)
-    self.write_attribute(:name, new_name.capitalize)
+    write_attribute(:name, new_name.capitalize)
   end
   
 end

@@ -219,7 +219,7 @@ class UsersControllerTest < ActionController::TestCase
 
     get :logout
 
-    assert_redirected_to "https://cas.uwaterloo.ca/cas/logout"
+    assert_redirected_to "https://cas.uwaterloo.ca/cas/logout?destination=%2F"
   end
 
   test "should not assign roles to self without authorization" do

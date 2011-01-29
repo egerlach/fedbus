@@ -3,47 +3,47 @@
 one:
   name: One
   destination: Aperture Science Cake Party
-  weekday: <%= (DateTime.now.wday + 5) % 7 %>
-  departure: 2000-01-01 20:00:00
-  arrival: 2000-01-01 00:00:00
-  return: 2000-01-01 02:00:00
+  weekday: <%= (DateTime.now.wday + 5) % 7 %> # 5 days in the future
+  departure: "10:00:00"
+  arrival: "12:00:00"
+  return: "16:00:00"
   ticket_price: 1.5
   sales_lead: 5
-  comment:
+  comment: "Lies"
   return_trip: 2
 
 friday:
   name: Friday Bus
   destination: Aperture Science Cake Party
-  weekday: <%= (DateTime.now.wday + 5) % 7 %>
-  departure: 2000-01-01 20:00:00
-  arrival: 2000-01-01 00:00:00
-  return: 2000-01-01 02:00:00
+  weekday: <%= DateTime.now.wday %>
+  departure: "16:00:00"
+  arrival: "17:00:00"
+  return: "17:59:00"
   ticket_price: 1.5
-  sales_lead: 14
-  comment:
+  sales_lead: 7 # Sell tickets 7 days in the future every week
+  comment: "Duke Nukem"
   return_trip: 2
 
 sunday:
   name: Sunday Bus
   destination: Aperture Science Lab
   weekday: <%= DateTime.now.wday %>
-  departure: 2000-01-01 20:00:00
-  arrival: 2000-01-01 10:00:00
-  return: 2000-01-01 12:00:00
+  departure: "06:00:00"
+  arrival: "08:00:00"
+  return: "10:00:00"
   ticket_price: 1.5
   sales_lead: 7
-  comment:
+  comment: "STFU"
   return_trip: -2
 
 long_trip:
   name: Uber Trip
   destination: Aperture Science Lab
   weekday: <%= DateTime.now.wday %>
-  departure: 2000-01-01 20:00:00
-  arrival: 2000-01-01 06:00:00
-  return: 2000-01-01 04:00:00
+  departure: "00:00:00"
+  arrival: "23:59:59"
+  return: "02:00:00"
   ticket_price: 1.5
-  sales_lead: 7
-  comment:
+  sales_lead: 14
+  comment: "RTFM"
   return_trip: -2

@@ -120,7 +120,7 @@ class UsersController < ApplicationController
   end
 
   def logout
-    reset_session
+    #reset_session
     CASClient::Frameworks::Rails::Filter.logout(self)
   end
 

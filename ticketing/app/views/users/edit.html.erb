@@ -1,6 +1,6 @@
 <h1>Editing user <%= @user.userid %></h1>
 
-<% form_for(@user) do |f| %>
+<%= form_for(@user) do |f| %>
   <%= render :partial => "form", :locals => {:f => f} %>
 
   <p>
