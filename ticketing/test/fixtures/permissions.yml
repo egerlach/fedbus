@@ -23,3 +23,6 @@ holidays:
 
 reading_weeks:
   name: Reading weeks
+
+buses:
+  name: Buses
