@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'ruby-debug'
 
 class BusTest < ActiveSupport::TestCase
   # Replace this with your real tests.
