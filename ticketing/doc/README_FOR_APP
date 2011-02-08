@@ -1,9 +1,2 @@
-= FedBus Ticketing
-
-This application constitutes the server component of the new FedBus application
-being developed at http://develop.feds.ca/projects/fedbus to replace the previous
-site at https://fedbus.feds.ca.
-
-It is responsible for managing and displaying the bus schedule, allowing students
-to book passage on a bus, and then subsequently retrieving this information in a
-form suitable for use by the boarding (client) component.
+Use this README file to introduce your application and point to useful places in the API for learning more.
+Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
