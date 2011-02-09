@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   # Stores a location to return to later (especially after login via CAS).
   # If not given a parameter, it defaults to the current request URI.
   def store_location(return_to = nil)
-    session[:return_to] = return_to || request.request_uri
+    session[:return_to] = return_to || request.fullpath #request.request_uri
   end
 
   # Redirects the user to the previously-stored location, or, if none

@@ -1,12 +1,12 @@
 <h1>Editing trip</h1>
 
-<% form_for(@trip) do |f| %>
+<%= form_for(@trip) do |f| %>
   <%= render :partial => "form", :locals => {:f => f} %>
 
   <p>
     <%= f.submit 'Update' %>
   </p>
-<% end %>
+<%= end %>
 
 <%= link_to 'Show', @trip %> |
 <%= link_to 'Back', trips_path %>

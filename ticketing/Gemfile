@@ -34,3 +34,4 @@ gem "rubycas-client", :require => 'casclient'
 gem "validates_timeliness"
 gem "mail", '2.2.15'
 gem "highline"
+gem "dynamic_form"

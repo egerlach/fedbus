@@ -8,7 +8,7 @@ class BusTest < ActiveSupport::TestCase
     b.status = nil
     assert b.invalid?, "Blank status should not be accepted"
     b.save
-    assert b.errors.invalid?(:status), "There should be an error in the status for a blank status"
+    assert b.errors[:status].any?, "There should be an error in the status for a blank status"
 
     b.status = :open
     assert b.valid?, "'Open' should be accepted as a status: " + b.errors.full_messages.inspect
@@ -19,7 +19,7 @@ class BusTest < ActiveSupport::TestCase
     b.status = :moo
     assert b.invalid?, "'Moo' should be an invalid status"
     b.save
-    assert b.errors.invalid?(:status), "'Moo' as a status should cause a status error"
+    assert b.errors[:status].any?, "'Moo' as a status should cause a status error"
   end
 
   test "Departure, arrival, and return date/times should be valid" do
@@ -45,15 +45,15 @@ class BusTest < ActiveSupport::TestCase
 
       b.departure = time
       assert b.invalid?, time.to_s + ' should not be accepted as a valid time for departure'
-      assert b.errors.invalid?(:departure), 'There should be an error in the departure for ' + time.to_s
+      assert b.errors[:departure].any?, 'There should be an error in the departure for ' + time.to_s
 
       b.arrival = time
       assert b.invalid?, time.to_s + ' should not be accepted as a valid time for arrival'
-      assert b.errors.invalid?(:arrival), 'There should be an error in the arrival for ' + time.to_s
+      assert b.errors[:arrival].any?, 'There should be an error in the arrival for ' + time.to_s
 
       b.return = time
       assert b.invalid?, time.to_s + ' should not be accepted as a valid time for return'
-      assert b.errors.invalid?(:return), 'There should be an error in the return for ' + time.to_s
+      assert b.errors[:return].any?, 'There should be an error in the return for ' + time.to_s
     end
 
   end
@@ -82,11 +82,11 @@ class BusTest < ActiveSupport::TestCase
 
     b.name = nil
     assert b.invalid?, "Bus should not accept a nil name"
-    assert b.errors.invalid?(:name), 'A nil name should cause an error'
+    assert b.errors[:name].any?, 'A nil name should cause an error'
 
     b.name = ""
     assert b.invalid?, "Bus should not accept a blank name"
-    assert b.errors.invalid?(:name), 'A blank name should cause an error'
+    assert b.errors[:name].any?, 'A blank name should cause an error'
 
 
     b.name = 'Something'
@@ -97,11 +97,11 @@ class BusTest < ActiveSupport::TestCase
     b = buses(:valid)
     b.maximum_seats = -2
     assert b.invalid?
-    assert b.errors.invalid?(:maximum_seats)
+    assert b.errors[:maximum_seats].any?
 
     b.maximum_seats = "foobar!"
     assert b.invalid?
-    assert b.errors.invalid?(:maximum_seats)
+    assert b.errors[:maximum_seats].any?
 
     b.maximum_seats = 0
     assert b.valid?
