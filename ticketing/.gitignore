@@ -4,3 +4,4 @@ db/*.sqlite3
 db/schema.rb
 config/session_secret
 doc/app
+*~
