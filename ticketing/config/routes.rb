@@ -1,16 +1,22 @@
-Ticketing::Application.routes.draw do |map|
-	map.resources :reading_weeks
+Ticketing::Application.routes.draw do 
+#	map.resources :reading_weeks
   
-  map.connect 'buses/today.:format', :controller => 'buses', :action => 'today'
+ # map.connect 'buses/today.:format', :controller => 'buses', :action => 'today'
 
-  map.resources :blackouts
-  map.resources :holidays
-  map.resources :trips
-  map.resources :buses
-  map.resources :permissions
-  map.resources :roles
-  map.resources :users
-  map.resources :admin
+
+#  map.resources :blackouts
+#  map.resources :holidays
+#  map.resources :trips
+#  map.resources :buses
+#  map.resources :permissions
+#  map.resources :roles
+#  map.resources :users
+#  map.resources :admin
+
+	resources :reading_weeks, :blackouts, :holidays, :trips, :buses,
+	          :permissions, :roles, :users, :admin
+
+	match 'buses/today.:format', :to => 'buses#today'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -57,20 +63,23 @@ Ticketing::Application.routes.draw do |map|
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
-  #   end
+  #   endEconomics must not be … left to esoteric circles. It is the philosophy of human life and action and concerns everybody and everything. It is the pith of civilization and of man's human existence.
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => "welcome#index"
-  map.root :controller => :users
+  #map.root :controller => :users
+	root :to => 'users#index'
 
   # See how all your routes lay out with "rake routes"
-  map.login '/login', :controller => :users, :action => :login
-  map.logout '/logout', :controller => :users, :action => :logout
+  #map.login '/login', :controller => :users, :action => :login
+  #map.logout '/logout', :controller => :users, :action => :logout
+	match 'login', :to => 'users#login', :as => "login"
+	match 'logout', :to => 'users#logout', :as => "logout"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  match ':controller(/:action(/:id(.:format)))'
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
 end
