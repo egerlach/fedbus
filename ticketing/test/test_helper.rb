@@ -40,7 +40,7 @@ class ActiveSupport::TestCase
   def assign_valid_value(model, variable, value)
     method = variable.to_s + '='
     model.send(method, value)
-    return false unless model.save && !model.errors[value].any?
+    return false unless model.save && !model.errors[variable].any?
 
     # If we are here then the test above passed
     return true
@@ -49,7 +49,7 @@ class ActiveSupport::TestCase
   def assign_invalid_value(model, variable, value)
     method = variable.to_s + '='
     model.send(method, value)
-    return false unless !model.save || model.errors[value].any?
+    return false unless !model.save || model.errors[variable].any?
 
     # If we are here then the test above passed
     return true

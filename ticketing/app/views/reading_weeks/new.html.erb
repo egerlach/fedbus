@@ -1,6 +1,6 @@
 <h1>New reading_week</h1>
 
-<% form_for(@reading_week) do |f| %>
+<%= form_for(@reading_week) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -22,6 +22,6 @@
   <p>
     <%= f.submit 'Create' %>
   </p>
-<%= end %>
+<% end %>
 
 <%= link_to 'Back', reading_weeks_path %>

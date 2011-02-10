@@ -1,6 +1,6 @@
 <h1>Editing holiday</h1>
 
-<% form_for(@holiday) do |f| %>
+<%= form_for(@holiday) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -18,7 +18,7 @@
   <p>
     <%= f.submit 'Update' %>
   </p>
-<%= end %>
+<% end %>
 
 <%= link_to 'Show', @holiday %> |
 <%= link_to 'Back', holidays_path %>

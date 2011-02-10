@@ -1,12 +1,12 @@
 <h1>Editing role</h1>
 
-<% form_for(@role) do |f| %>
+<%= form_for(@role) do |f| %>
   <%= render :partial => "form", :locals => {:f => f} %>
 
   <p>
     <%= f.submit 'Update' %>
   </p>
-<%= end %>
+<% end %>
 
 <%= link_to 'Show', @role %> |
 <%= link_to 'Back', roles_path %>
