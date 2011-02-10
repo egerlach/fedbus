@@ -61,7 +61,7 @@ class TripsControllerTest < ActionController::TestCase
   test "should create trip for an authenticated user with the trips permission" do
     setup_authenticated_user_with_permission :tester, :trips
     assert_difference('Trip.count') do
-      post :create, :trip => { "name" => "MyString", "destination" => "MyString", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
+      post :create, :trip => { "name" => "MyString", "destination" => "MyString", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:36", "return" => "12:19:37", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
     end
 
     assert_redirected_to trip_path(assigns(:trip))
