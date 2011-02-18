@@ -1,11 +1,19 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  start: <%= DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T00:00:00", "%FT%T") %>
-  expiry: <%= DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T00:00:00", "%FT%T") + 7 %>
-  comment: Moving Blackout period that should take out all but one bus.
+  #start: <%= DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T00:00:00", "%FT%T") %>
+  start: <%= DateTime.current %>
+  #expiry: <%= DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T00:00:00", "%FT%T") + 7 %>
+  expiry: <%= DateTime.current + 7.seconds %>
+  comment: Default blackout
+
+# No longer valid since it has to be on or after today
+#two:
+#  start: 2010-07-08 16:22:09
+#  expiry: 2010-07-08 16:22:09
+#  comment: MyText
 
 two:
-  start: 2010-07-08 16:22:09
-  expiry: 2010-07-08 16:22:09
-  comment: MyText
+   start: <%= Date.current + 3.days %>
+   expiry: <%= Date.current + 10.days %>
+   comment: Moving blackout period that should take out all but one bus

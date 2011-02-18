@@ -31,7 +31,9 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # end
 
 gem "rubycas-client", :require => 'casclient'
-gem "validates_timeliness"
+gem "validates_timeliness", '~> 3.0.2' # If updated, run
+											# rails generate validates_timeliness:install
 gem "mail", '2.2.15'
 gem "highline"
 gem "dynamic_form"
+gem "ruby-debug19"

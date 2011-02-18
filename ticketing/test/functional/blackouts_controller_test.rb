@@ -60,7 +60,8 @@ class BlackoutsControllerTest < ActionController::TestCase
   test "should create blackout for authenticated user with the blackouts permission" do
     setup_authenticated_user_with_permission :tester, :blackouts
     assert_difference('Blackout.count') do
-      post :create, :blackout => { :start => "2010-07-08 17:48", :expiry => "2010-08-04 00:00" }
+     # post :create, :blackout => { :start => "2010-07-08 17:48", :expiry => "2010-08-04 00:00" } # Date must be on or after today
+		 post :create, :blackout => { :start => Date.today, :expiry => Date.today }
     end
 
     assert_redirected_to blackout_path(assigns(:blackout))
@@ -98,7 +99,9 @@ class BlackoutsControllerTest < ActionController::TestCase
 
   test "should update blackout with an authenticated user with the blackouts permission" do
     setup_authenticated_user_with_permission :tester, :blackouts
-    put :update, :id => blackouts(:one).to_param, :blackout => { :start => "2010-07-09 12:45", :expiry => "2010-07-09 17:00" }
+	 #post :create, :id => blackouts(:one).to_param, :blackout => { :start => "2010-06-09 12:45", :expiry => "2010-07-09 17:00" }
+    #put :update, :id => blackouts(:one).to_param, :blackout => { :start => "2010-07-09 12:45", :expiry => "2010-07-09 17:00" } # Must be on or after today
+	 put :update, :id => blackouts(:one).to_param, :blackout => { :start => Date.today, :expiry => Date.today }
     assert_redirected_to blackout_path(assigns(:blackout))
   end
 

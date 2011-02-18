@@ -2,6 +2,13 @@ require 'test_helper'
 
 class TripsControllerTest < ActionController::TestCase
 
+	def trip
+		{ "name" => "MyString", "destination" => "MyString", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
+	end
+	def trip2
+		{ "name" => "MyString that is different", "destination" => "MyString that is different", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
+	end
+
   test "should get index for an unauthenticated user" do
     get :index
     assert_response :success
@@ -61,8 +68,8 @@ class TripsControllerTest < ActionController::TestCase
   test "should create trip for an authenticated user with the trips permission" do
     setup_authenticated_user_with_permission :tester, :trips
     assert_difference('Trip.count') do
-      post :create, :trip => { "name" => "MyString", "destination" => "MyString", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:36", "return" => "12:19:37", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
-    end
+      post :create, :trip => trip
+	 end
 
     assert_redirected_to trip_path(assigns(:trip))
   end
@@ -99,7 +106,7 @@ class TripsControllerTest < ActionController::TestCase
 
   test "should update trip for an authenticated user with the trips permission" do
     setup_authenticated_user_with_permission :tester, :trips
-    put :update, :id => trips(:one).to_param, :trip => { "name" => "MyString that is different", "destination" => "MyString that is different", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
+    put :update, :id => trips(:one).to_param, :trip => trip2
     assert_redirected_to trip_path(assigns(:trip))
   end
 

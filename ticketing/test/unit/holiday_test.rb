@@ -7,8 +7,8 @@ class HolidayTest < ActiveSupport::TestCase
       assert assign_valid_value(holidays(:one), :date, x), "A holiday should accept a valid date."
     }
 
-    ["2010-02-29", "July 9, 2010", "", nil].each { |x|
-      assert assign_invalid_value(holidays(:one), :date, x), "A holiday should not accept an invalid date string."
+    ["2010-02-29", "", nil].each { |x|
+      assert assign_invalid_value(holidays(:one), :date, x), "A holiday should not accept an invalid date string: " + x.to_s
     }
   end
 
@@ -23,8 +23,8 @@ class HolidayTest < ActiveSupport::TestCase
   end
 
   test "A holiday should not accept an invalid object as a date" do
-    [0, "one", "1", Time, "Sept 23, 2004", "2010-09-31"].each { |x|
-      assert assign_invalid_value(holidays(:one), :date, x), "A holiday should not accept an invalid object as a date."
+    [0, "one", "1", Time, "2010-09-31"].each { |x|
+      assert assign_invalid_value(holidays(:one), :date, x), "A holiday should not accept an invalid object as a date: " + x.to_s
     }
   end
 

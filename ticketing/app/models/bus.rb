@@ -9,9 +9,9 @@ class Bus < ActiveRecord::Base
 
   validates_numericality_of :maximum_seats, :greater_than_or_equal_to => 0
 
-  validates_datetime :departure
-  validates_datetime :arrival, :on_or_after => :departure
-  validates_datetime :return, :on_or_after => :arrival
+  validates_datetime :departure#, :on_or_after => :today
+  validates_datetime :arrival#, :on_or_after => :departure
+  validates_datetime :return#, :on_or_after => :arrival
 
   belongs_to :trip
 

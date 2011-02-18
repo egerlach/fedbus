@@ -6,3 +6,4 @@ config/session_secret
 doc/app
 *~
 *.swp
+*.vim

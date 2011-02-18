@@ -2,8 +2,12 @@ require 'test_helper'
 
 class TripTest < ActiveSupport::TestCase
 
-    valid_times = ["00:00", "00:59", "13:00:59", "8:45pm", "13am", Time.now]
+    valid_times = ["00:00", "00:59", "13:00:59", "8:45pm", Time.now]
   invalid_times = ["25:00:00", "00:60", "13:00pm", "", nil, "sdfaw", "5 o'clock"]
+
+  test "First fixture should save" do
+	  assert trips(:one).save, "Fixture one is not valid"
+  end
 
   test "A trip must have a name" do
     assert assign_valid_value(trips(:one), :name, "Aperture Science"), "A trip name should accept a non-enpty string."
@@ -57,7 +61,7 @@ class TripTest < ActiveSupport::TestCase
     }
 
     invalid_times.each { |x|
-      assert assign_invalid_value(trips(:one), :departure, x), "An invalid time of " + x.to_s + " should not be assignable as a departure time"
+      assert assign_invalid_value(trips(:one), :departure, x), "An invalid time of " + x.to_s + " should not be assignable as a departure time. Actual time: "
     }
   end
 
@@ -81,7 +85,7 @@ class TripTest < ActiveSupport::TestCase
     }
   end
 
-  test "A trip comment can have any string including and empty one as a value" do
+  test "A trip comment can have any string including an empty one as a value" do
     ["delicious cake party bus", nil, ""].each { |x|
       assert assign_valid_value(trips(:one), :comment, x), "A trip comment should accept " + x.to_s + " as a valid value."
     }

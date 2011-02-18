@@ -14,7 +14,8 @@ Ticketing::Application.routes.draw do
 #  map.resources :admin
 
 	resources :reading_weeks, :blackouts, :holidays, :trips, :buses,
-	          :permissions, :roles, :users, :admin
+	          :permissions, :roles, :users
+	resource :admin
 
 	match 'buses/today.:format', :to => 'buses#today'
 
@@ -63,7 +64,7 @@ Ticketing::Application.routes.draw do
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
-  #   endEconomics must not be … left to esoteric circles. It is the philosophy of human life and action and concerns everybody and everything. It is the pith of civilization and of man's human existence.
+  #   end
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

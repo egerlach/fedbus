@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'validates_timeliness'
 
 class BusTest < ActiveSupport::TestCase
   # Replace this with your real tests.
@@ -42,14 +43,14 @@ class BusTest < ActiveSupport::TestCase
 
     invalid_times.each do |time|
       b = buses(:valid).clone
-
-      b.departure = time
-      assert b.invalid?, time.to_s + ' should not be accepted as a valid time for departure'
-      assert b.errors[:departure].any?, 'There should be an error in the departure for ' + time.to_s
+#debugger
+      b.departure = time 
+      assert b.invalid?, time.to_s + ' should not be accepted as a valid time for departure. Actual time: ' + b.departure.to_s
+      assert b.errors[:departure].any?, 'There should be an error in the departure for ' + time.to_s + " Actual time: " + b.departure.to_s
 
       b.arrival = time
       assert b.invalid?, time.to_s + ' should not be accepted as a valid time for arrival'
-      assert b.errors[:arrival].any?, 'There should be an error in the arrival for ' + time.to_s
+      assert b.errors[:arrival].any?, 'There should be an error in the arrival for ' + time.to_s + " Actual arrival: " + b.arrival.to_s
 
       b.return = time
       assert b.invalid?, time.to_s + ' should not be accepted as a valid time for return'
@@ -104,7 +105,7 @@ class BusTest < ActiveSupport::TestCase
     assert b.errors[:maximum_seats].any?
 
     b.maximum_seats = 0
-    assert b.valid?
+    assert b.valid? 
 
     b.maximum_seats = 48
     assert b.valid?
@@ -112,12 +113,12 @@ class BusTest < ActiveSupport::TestCase
 
   test "Bus should report correct date & return date values" do
     b = buses(:valid)
-    assert_equal b.date, Date.civil(2010, 6, 22)
+    assert_equal Date.today + 3.days, b.date
 
     b.trip = trips(:one)
 
     assert !b.trip.nil?
 
-    assert_equal Date.civil(2010, 6, 24), b.return_date
+    assert_equal Date.today + (((DateTime.now.wday % + 5) % 7) + 1).days, b.return_date
   end
 end

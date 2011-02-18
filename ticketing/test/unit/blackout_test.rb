@@ -6,7 +6,7 @@ class BlackoutTest < ActiveSupport::TestCase
     b = blackouts(:one)
 
     [b.start, b.start + 1, b.start + 100000].each { |x|
-      assert assign_valid_value b, :expiry, x
+      assert assign_valid_value(b, :expiry, x), x.to_s
     }
 
     [b.start - 1, b.start - 100000].each { |x|
@@ -18,7 +18,8 @@ class BlackoutTest < ActiveSupport::TestCase
   test "a blackout period start must be on or before it's expiry" do
     b = blackouts(:one)
 
-    [b.expiry, b.expiry - 1, b.expiry - 100000].each { |x|
+	 # Start can't be before Time.now, so - 100000 is too far
+    [b.expiry, b.expiry - 1.seconds].each { |x|
       assert assign_valid_value b, :start, x
     }
 
@@ -32,8 +33,8 @@ class BlackoutTest < ActiveSupport::TestCase
     b = blackouts(:one)
 
     ["1", "two", 0, 34534, 0.456, -5.6, -1, "Sept 5, 2000"].each { |x|
-      assert assign_invalid_value b, :start, x
-      assert assign_invalid_value b, :expiry, x
+      assert assign_invalid_value(b, :start, x), b[:expiry].to_s
+      assert assign_invalid_value(b, :expiry, x), b[:expiry].to_s
     }
 
   end
