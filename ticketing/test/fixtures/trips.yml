@@ -4,7 +4,7 @@ one:
   name: One
   destination: Aperture Science Cake Party
   weekday: <%= (DateTime.now.wday + 5) % 7 %> # 5 days in the future
-  departure: "14:00:00"
+  departure: "10:00:00"
   arrival: "12:00:00"
   return: "16:00:00"
   ticket_price: 1.5
@@ -15,7 +15,7 @@ one:
 friday:
   name: Friday Bus
   destination: Aperture Science Cake Party
-  weekday: 5
+  weekday: <%= DateTime.now.wday %>
   departure: "16:00:00"
   arrival: "17:00:00"
   return: "17:59:00"
@@ -27,7 +27,7 @@ friday:
 sunday:
   name: Sunday Bus
   destination: Aperture Science Lab
-  weekday: 0
+  weekday: <%= DateTime.now.wday %>
   departure: "06:00:00"
   arrival: "08:00:00"
   return: "10:00:00"
@@ -44,6 +44,6 @@ long_trip:
   arrival: "23:59:59"
   return: "02:00:00"
   ticket_price: 1.5
-  sales_lead: 7
+  sales_lead: 14
   comment: "RTFM"
   return_trip: -2

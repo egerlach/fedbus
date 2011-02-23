@@ -119,6 +119,6 @@ class BusTest < ActiveSupport::TestCase
 
     assert !b.trip.nil?
 
-    assert_equal Date.today + (((DateTime.now.wday % + 5) % 7) + 1).days, b.return_date
+    assert_equal Date.today + 5.days, b.return_date
   end
 end

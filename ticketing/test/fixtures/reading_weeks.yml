@@ -8,6 +8,6 @@ one:
 
 test:
   start_date: <%= Date.today %>
-  normal_return_date: <%= Date.today + 2 %>
-  end_date: <%= Date.today + 7 %>
+  normal_return_date: <%= Date.today + 1.days %>
+  end_date: <%= Date.today + 2.days %>
   comment: MyText

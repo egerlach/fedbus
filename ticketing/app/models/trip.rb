@@ -19,4 +19,15 @@ class Trip < ActiveRecord::Base
     "Trip: " + name + " " + destination + " " + departure.strftime("%H:%M") + " " + arrival.strftime("%H:%M") + " " + self.return.strftime("%H:%M") + " $" + ticket_price.to_s + " " + weekday.to_s + " " + sales_lead.to_s + " " + return_trip.to_s
   end
 
+  def has_bus? bus
+	@buses = self.buses
+
+	buses.each do |b|
+		return true if bus.to_s.eql? b.to_s
+	end
+
+	return false
+  end
+
+
 end

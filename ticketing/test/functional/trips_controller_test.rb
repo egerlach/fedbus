@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'logger'
 
 class TripsControllerTest < ActionController::TestCase
 
@@ -189,7 +190,7 @@ class TripsControllerTest < ActionController::TestCase
     # Stop any holidays from interfering
     Holiday.destroy_all
     ReadingWeek.destroy_all
-
+#Rails.logger.info "should not create buses during a scheduled blackout period"
     assert_difference('Bus.count', 1) {
       get :generate
     }
@@ -201,7 +202,8 @@ class TripsControllerTest < ActionController::TestCase
     # Stop and blackouts from interfering
     Blackout.destroy_all
     ReadingWeek.destroy_all
-
+Rails.logger.info "should not create buses from a trip that falls on holiday - offset instead"
+Rails.logger.info "Current bus count: " + Bus.count.to_s
     assert_difference('Bus.count', 5) {
       get :generate
     }
@@ -209,7 +211,7 @@ class TripsControllerTest < ActionController::TestCase
     # Were they created on the correct offset?
     assert Bus.find_by_name("Sunday Bus").departure.strftime("%Y-%m-%d") == (Date.today + 1).strftime("%Y-%m-%d")
     assert Bus.find_by_name("Uber Trip" ).departure.strftime("%Y-%m-%d") == (Date.today + 1).strftime("%Y-%m-%d")
-
+Rails.logger.info "next bus creation"
     # Should not create buses that already exist
     assert_difference('Bus.count', 0) {
       get :generate
@@ -222,10 +224,10 @@ class TripsControllerTest < ActionController::TestCase
     # Stop Holidays and blackouts from interfering
     Blackout.destroy_all
     Holiday.destroy_all
-
-    assert_difference('Bus.count', 1) {
+#Rails.logger.info "should not create buses during a reading week"
+    assert_difference('Bus.count', 2) {
       get :generate
-    }
+    } # Should create "One" bus 5 days from now, and "Uber Trip" 7 days ahead
   end
 
 end

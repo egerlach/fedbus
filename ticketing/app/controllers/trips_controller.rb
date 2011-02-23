@@ -129,9 +129,16 @@ class TripsController < ApplicationController
         if (trip.buses.select{ |b| day_start + trip_offset + week*7 + exception_offset < b.departure && 
                                 day_end   + trip_offset + week*7 + exception_offset > b.departure }).count < 1
           b = Bus.new_from_trip(trip, Date.today + trip_offset + week*7 + exception_offset) 
-          trip.buses << b unless Blackout.blackedout?(b.departure) or ReadingWeek.blackedout?(b.departure)
+          trip.buses << b unless Blackout.blackedout?(b.departure) or ReadingWeek.blackedout?(b.departure) or trip.has_bus?(b)
         end
       end
+
+		# Just testing/kidding
+		trip.buses.each do |b|
+			logger.info "wtf is this crap."
+			logger.info b.to_s
+		end
+
     end
 
     # Redirect the user back to trips
