@@ -14,9 +14,9 @@ Ticketing::Application.routes.draw do
 #  map.resources :admin
 
 	resources :reading_weeks, :blackouts, :holidays, :trips, :buses,
-	          :permissions, :roles, :users
-	resource :admin
-
+	          :permissions, :roles, :users 
+	resource :admin, :controller => 'admin'
+	match "/admin(.:format)" => "admin#index"
 	match 'buses/today.:format', :to => 'buses#today'
 
   # The priority is based upon order of creation:
