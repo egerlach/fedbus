@@ -5,3 +5,5 @@ db/schema.rb
 config/session_secret
 doc/app
 *~
+*.swp
+*.vimx
