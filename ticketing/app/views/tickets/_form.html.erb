@@ -1,0 +1,8 @@
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :direction %><br />
+    <%= f.select :direction, Ticket::DIRECTIONS.collect {|x| [x.to_s.humanize, x]} %>
+  </p>
+
+

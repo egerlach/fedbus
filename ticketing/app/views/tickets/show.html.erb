@@ -1,0 +1,15 @@
+<p>
+  <b>Owner:</b>
+  <%=h @ticket.user.first_name + " " + @ticket.user.last_name if @ticket.user %>
+</p>
+<p>
+  <b>Direction:</b>
+  <%=h @ticket.direction.to_s.humanize %>
+</p>
+<p>
+  <b>Bus:</b>
+  <%=h @ticket.bus.to_s %>
+<p>
+ 
+<%= link_to 'Edit', edit_ticket_path(@ticket) %> |
+<%= link_to 'Back', tickets_path %>
