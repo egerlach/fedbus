@@ -15,7 +15,7 @@ Ticketing::Application.routes.draw do
 #  map.resources :admin
 
 	resources :reading_weeks, :blackouts, :holidays, :trips, :buses,
-	          :permissions, :roles, :users 
+	          :permissions, :roles, :users, :tickets 
 	resource :admin, :controller => 'admin'
 	#match "/admin(.:format)" => "admin#index"
 	match 'buses/today.:format', :to => 'buses#today'
