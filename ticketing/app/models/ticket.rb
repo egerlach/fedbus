@@ -3,6 +3,8 @@ class Ticket < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :bus
+
+	validates_presence_of :user_id, :bus_id
   
   symbolize :direction, :in => DIRECTIONS
 end

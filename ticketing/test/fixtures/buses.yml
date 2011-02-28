@@ -12,7 +12,6 @@ one:
   status: open
   direction: from_waterloo
   maximum_seats: 1
-  available_seats: 1
 
 two:
   name: MyString
@@ -26,7 +25,6 @@ two:
   status: open
   direction: from_waterloo
   maximum_seats: 1
-  available_seats: 1
 
 valid:
   name: MyString
@@ -40,4 +38,3 @@ valid:
   status: open
   direction: from_waterloo
   maximum_seats: 1
-  available_seats: 1

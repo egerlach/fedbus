@@ -117,7 +117,6 @@ class BusTest < ActiveSupport::TestCase
     assert b.errors[:maximum_seats].any?
 
     b.maximum_seats = 0
-		b.available_seats = 0
     assert b.valid? 
 
     b.maximum_seats = 48
