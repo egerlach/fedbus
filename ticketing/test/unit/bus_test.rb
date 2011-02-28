@@ -2,7 +2,19 @@ require 'test_helper'
 require 'validates_timeliness'
 
 class BusTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
+
+	test "Fixtures should be valid" do
+		b1 = buses(:one)
+		b2 = buses(:two)
+		b3 = buses(:valid)
+		b1.save!
+		b2.save!
+		b3.save!
+		assert b1.valid?, "Bus one is not valid"
+		assert b2.valid?, "Bus two is not valid"
+		assert b3.valid?, "Bus valid is not valid"
+	end
+
   test "Status should be one of 'Open' or 'Locked'" do
     b = buses(:valid)
 
@@ -105,6 +117,7 @@ class BusTest < ActiveSupport::TestCase
     assert b.errors[:maximum_seats].any?
 
     b.maximum_seats = 0
+		b.available_seats = 0
     assert b.valid? 
 
     b.maximum_seats = 48

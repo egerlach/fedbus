@@ -11,7 +11,7 @@ class Trip < ActiveRecord::Base
   validates_numericality_of :ticket_price, :greater_than_or_equal_to => 0
   validates_numericality_of :weekday,     :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 6
   validates_numericality_of :sales_lead,  :only_integer => true, :greater_than_or_equal_to => 0
-  validates_numericality_of :return_trip, :only_integer => true, :greater_than_or_equal_to => 0, :allow_blank => true
+  validates_numericality_of :return_trip, :only_integer => true, :allow_blank => true
 
   has_many :buses
 

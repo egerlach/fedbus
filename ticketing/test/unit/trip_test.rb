@@ -5,8 +5,11 @@ class TripTest < ActiveSupport::TestCase
     valid_times = ["00:00", "00:59", "13:00:59", "8:45pm", Time.now]
   invalid_times = ["25:00:00", "00:60", "13:00pm", "", nil, "sdfaw", "5 o'clock"]
 
-  test "First fixture should save" do
-	  assert trips(:one).save, "Fixture one is not valid"
+  test "Fixtures should be valid" do
+	  assert trips(:one).valid?, "Fixture one is not valid"
+	  assert trips(:friday).valid?, "Fixture friday is not valid"
+	  assert trips(:sunday).valid?, "Fixture sunday is not valid"
+	  assert trips(:long_trip).valid?, "Fixture long_trip is not valid"
   end
 
   test "A trip must have a name" do
@@ -45,12 +48,12 @@ class TripTest < ActiveSupport::TestCase
     }
   end
 
-  test "A trip must have a return trip that is a positive integer number of days in the future or none at all." do
-    [0, 1, 5, 100000000, ""].each { |x|
+  test "A trip must have a return trip that is an integer number of days or none at all" do
+    [0, 1, 5, 100000000, "", -1, -5].each { |x|
       assert assign_valid_value(trips(:one), :return_trip, x), "A valid relative date of " + x.to_s + " should be assignable as a return_trip."
     }
 
-    [-1, 1.2, 5.5, -3.14159].each { |x|
+    [1.2, 5.5, -3.14159].each { |x|
       assert assign_invalid_value(trips(:one), :return_trip, x), "An invalid relative date of " + x.to_s + " should not be assignable as a return_trip."
     }
   end

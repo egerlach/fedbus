@@ -9,9 +9,10 @@ one:
   ticket_price: 1.5
   sales_lead: 1
   comment: MyText
-  status: MyText
+  status: open
   direction: from_waterloo
   maximum_seats: 1
+  available_seats: 1
 
 two:
   name: MyString
@@ -22,9 +23,10 @@ two:
   ticket_price: 1.5
   sales_lead: 1
   comment: MyText
-  status: MyText
+  status: open
   direction: from_waterloo
   maximum_seats: 1
+  available_seats: 1
 
 valid:
   name: MyString
@@ -38,3 +40,4 @@ valid:
   status: open
   direction: from_waterloo
   maximum_seats: 1
+  available_seats: 1

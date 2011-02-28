@@ -209,8 +209,9 @@ Rails.logger.info "Current bus count: " + Bus.count.to_s
     }
 
     # Were they created on the correct offset?
-    assert Bus.find_by_name("Sunday Bus").departure.strftime("%Y-%m-%d") == (Date.today + 1).strftime("%Y-%m-%d")
-    assert Bus.find_by_name("Uber Trip" ).departure.strftime("%Y-%m-%d") == (Date.today + 1).strftime("%Y-%m-%d")
+Rails.logger.info "Before offset finding"
+    assert Bus.find_by_name("Sunday Bus").departure.strftime("%Y-%m-%d") == (Date.today + 2).strftime("%Y-%m-%d"), Bus.find_by_name("Sunday Bus").departure.strftime("%Y-%m-%d") 
+    assert Bus.find_by_name("Uber Trip" ).departure.strftime("%Y-%m-%d") == (Date.today + 1).strftime("%Y-%m-%d"), Bus.find_by_name("Uber Trip").departure.strftime("%Y-%m-%d")
 Rails.logger.info "next bus creation"
     # Should not create buses that already exist
     assert_difference('Bus.count', 0) {
