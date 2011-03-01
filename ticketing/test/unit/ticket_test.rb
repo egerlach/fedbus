@@ -5,6 +5,7 @@ class TicketTest < ActiveSupport::TestCase
   test "fixtures should be valid" do
    assert tickets(:one).valid?, "First ticket not valid"
 	 assert tickets(:two).valid?, "Second ticket not valid"
+	 assert tickets(:three).valid?, "Third ticket not valid"
   end
 
 	test "ticket should not accept invalid direction" do

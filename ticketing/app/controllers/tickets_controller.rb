@@ -1,4 +1,7 @@
 class TicketsController < ApplicationController
+	before_filter permission_required(:tickets), :except => [:show]
+	before_filter permission_required(:tickets), :only => [:show],
+		            :unless => lambda { |c| c.logged_in? && c.current_user == Ticket.find(c.params[:id]).user }
   # GET /tickets
   # GET /tickets.xml
   def index
@@ -82,4 +85,12 @@ class TicketsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+	def browse
+		@buses = Bus.all
+
+		respond_to do |format|
+			format.html
+		end
+	end
 end

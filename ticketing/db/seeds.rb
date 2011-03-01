@@ -1,7 +1,15 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
-#   Mayor.create(:name => 'Daley', :city => cities.first)
+# Permission to administer the application's access control components,
+# including users and authorization.
+Permission.find_or_create_by_name("Manage access control")
+Permission.find_or_create_by_name("Trips")
+Permission.find_or_create_by_name("Buses")
+Permission.find_or_create_by_name("Blackouts")
+Permission.find_or_create_by_name("Holidays")
+Permission.find_or_create_by_name("Reading weeks")
+Permission.find_or_create_by_name("View admin panel")
+Permission.find_or_create_by_name("Tickets")
+
+# Default roles
+admin = Role.find_or_create_by_name("Administrator")
+admin.permissions = Permission.all
+admin.save!

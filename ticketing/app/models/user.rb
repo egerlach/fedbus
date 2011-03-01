@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
-  has_many :ticket
+  has_many :tickets
 
   validates_format_of :email, :with => /[a-z0-9!#\$%&'*+\/=?^_`\{|\}~-]+(?:\.[a-z0-9!#\$%&'*+\/=?^_`\{|\}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   validates_presence_of :first_name, :last_name, :userid

@@ -15,7 +15,7 @@ Ticketing::Application.routes.draw do
 #  map.resources :admin
 
 	resources :reading_weeks, :blackouts, :holidays, :trips, :buses,
-	          :permissions, :roles, :users, :tickets 
+	          :permissions, :roles, :users 
 	resource :admin, :controller => 'admin'
 	#match "/admin(.:format)" => "admin#index"
 	match 'buses/today.:format', :to => 'buses#today'
@@ -33,6 +33,12 @@ Ticketing::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+
+	resources :tickets do
+		collection do
+			get 'browse'
+		end
+	end
 
   # Sample resource route with options:
   #   resources :products do

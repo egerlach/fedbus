@@ -26,3 +26,6 @@ reading_weeks:
 
 buses:
   name: Buses
+
+tickets:
+  name: Tickets

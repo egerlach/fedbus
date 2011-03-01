@@ -1,5 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
+# First ticket should not have direction :from_waterloo
+# First ticket should have user_id 1
+# Do not modify user_id of ticket three
  one:
    direction: to_waterloo
    user_id: 1
@@ -9,3 +11,8 @@
    direction: from_waterloo
    user_id: 2
    bus_id: 2
+
+ three:
+   direction: to_waterloo
+   user: one
+   bus_id: 3
