@@ -1,0 +1,9 @@
+	<tr>
+		<td><%= bus.description %></td>
+		<td><%= bus.departure %></td>
+		<td><%= bus.arrival %></td>
+		<td><%= bus.return %></td>
+		<td><%= select "bus", "direction", (Bus::DIRECTIONS.collect {|x| x.to_s.humanize if x == bus.direction || bus.direction == Bus::DIRECTIONS[0]}).select {|e| !e.nil? } %></td>
+		<td><%= submit_tag 'Reserve' %></td>
+		<%= hidden_field_tag :bus_id,  bus.id %>
+	</tr>

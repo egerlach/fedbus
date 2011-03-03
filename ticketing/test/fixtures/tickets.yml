@@ -5,14 +5,14 @@
  one:
    direction: to_waterloo
    user_id: 1
-   bus_id: 1
+   bus: two
 
  two:
    direction: from_waterloo
    user_id: 2
-   bus_id: 2
+   bus: one
 
  three:
    direction: to_waterloo
    user: one
-   bus_id: 3
+   bus: valid

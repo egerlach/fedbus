@@ -14,7 +14,7 @@ class Bus < ActiveRecord::Base
   validates_datetime :return#, :on_or_after => :arrival
 
   belongs_to :trip
-  has_many :ticket
+  has_many :tickets
 
   def self.new_from_trip trip, dep_date
     b = Bus.new( {

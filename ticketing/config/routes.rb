@@ -37,6 +37,7 @@ Ticketing::Application.routes.draw do
 	resources :tickets do
 		collection do
 			get 'browse'
+			post 'reserve'
 		end
 	end
 

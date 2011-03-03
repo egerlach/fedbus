@@ -26,4 +26,12 @@ class TicketTest < ActiveSupport::TestCase
 		t.user_id = 1
 		assert t.invalid?, "Ticket should not be created without bus"
 	end
+
+	test "should not create ticket with direction not applicable to bus" do
+		t = Ticket.new
+		t.direction = :to_waterloo
+		t.user_id = 1
+		t.bus = buses(:one)
+		assert t.invalid?, "Ticket needs a direction applicable to bus"
+	end
 end

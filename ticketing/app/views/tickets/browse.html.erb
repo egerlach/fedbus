@@ -1,0 +1,19 @@
+<h1>Buying Tickets</h1>
+
+<table>
+	<tr>
+		<th>Description</th>
+		<th>Departure</th>
+		<th>Arrival</th>
+		<th>Return</th>
+		<th>Buy</th>
+	</tr>
+
+	<% @buses.each do |bus| %>
+		<%= form_tag "/tickets/reserve" do %>
+			<%= render :partial => "bus", :locals => {:bus => bus} %>
+		<% end %>
+	<% end %>
+
+</table>
+

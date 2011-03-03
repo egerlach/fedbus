@@ -1,7 +1,8 @@
 class TicketsController < ApplicationController
-	before_filter permission_required(:tickets), :except => [:show]
+	before_filter permission_required(:tickets), :except => [:show, :browse]
 	before_filter permission_required(:tickets), :only => [:show],
-		            :unless => lambda { |c| c.logged_in? && c.current_user == Ticket.find(c.params[:id]).user }
+     	            :unless => lambda { |c| c.logged_in? && 
+									           c.current_user == Ticket.find(c.params[:id]).user }
   # GET /tickets
   # GET /tickets.xml
   def index
@@ -16,6 +17,9 @@ class TicketsController < ApplicationController
   # GET /tickets/1
   # GET /tickets/1.xml
   def show
+		#permission_required(:tickets) unless  logged_in? && 
+		#							           current_user == Ticket.find(params[:id]).user 
+
     @ticket = Ticket.find(params[:id])
 
     respond_to do |format|
@@ -93,4 +97,14 @@ class TicketsController < ApplicationController
 			format.html
 		end
 	end
+
+	def reserve
+		@bus = Bus.find(params[:bus_id])
+		@direction = params[:bus]["direction"]
+
+		respond_to do |format|
+			format.html
+		end
+	end
+
 end

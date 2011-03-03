@@ -1,5 +1,5 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
+# Keep bus one's direction as from_waterloo
 one:
   name: MyString
   description: MyString
@@ -23,7 +23,7 @@ two:
   sales_lead: 1
   comment: MyText
   status: open
-  direction: from_waterloo
+  direction: to_waterloo
   maximum_seats: 1
 
 valid:
@@ -36,5 +36,5 @@ valid:
   sales_lead: 1
   comment: MyText
   status: open
-  direction: from_waterloo
+  direction: both_directions
   maximum_seats: 1
