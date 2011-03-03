@@ -58,6 +58,14 @@ class Bus < ActiveRecord::Base
     "Bus: " + name + " " + status.to_s.humanize + " " + direction.to_s.humanize + " " + maximum_seats.to_s + " " + departure.to_s + " " + arrival.to_s + " " + self.return.to_s
   end
 
+	def available_tickets(direction)
+		if self.direction == DIRECTIONS[0] || direction == self.direction
+			return self.maximum_seats - (self.tickets.select { |t| t.direction == direction }).count
+		else
+			return 0
+		end
+	end
+
   private
 
   def self.cat_date_time date, time

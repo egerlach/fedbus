@@ -1,3 +1,9 @@
-<%= "This is your mom: " + @bus.description %>
-<br />
-<%= "this is not your mom: " + @direction %>
+<%= "Tickets have been reserved for " + @ticket[0].user.to_s %>
+<% @ticket.each do |t| %>
+	<br />
+	<%= link_to "Ticket ", t %>
+	<br />
+	<%= "For the bus: " + @bus.name %>
+	<br />
+	<%= "In the direction: " + t.direction.to_s.humanize %> 
+<% end %>

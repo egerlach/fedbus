@@ -100,7 +100,25 @@ class TicketsController < ApplicationController
 
 	def reserve
 		@bus = Bus.find(params[:bus_id])
-		@direction = params[:bus]["direction"]
+		@direction = params[:bus]["direction"].to_sym
+
+		@dirs = []
+		if(@direction != Bus::DIRECTIONS[0])
+			@dirs << @direction
+		else
+			@dirs = Ticket::DIRECTIONS
+		end
+
+		@ticket = [] << Ticket.new
+		@ticket << Ticket.new if(@direction == Bus::DIRECTIONS[0])
+
+		@ticket.each do |t|
+			t.direction = @dirs[0]
+			@dirs = @dirs[1..-1]
+			t.bus = @bus
+			t.user = current_user
+			t.save!
+		end
 
 		respond_to do |format|
 			format.html

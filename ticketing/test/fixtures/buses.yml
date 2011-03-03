@@ -38,3 +38,27 @@ valid:
   status: open
   direction: both_directions
   maximum_seats: 1
+
+dummy_bus:
+  name: BusForTicketFixtures
+  description: Non-descript
+  departure: <%= Date.current %>
+  arrival: <%= Date.current %>
+  return: <%= Date.current %>
+  ticket_price: 1
+  sales_lead: 0
+  comment: Duh
+  direction: both_directions
+  maximum_seats: 50
+# Keep null_bus with 0 maximum_seats
+null_bus:
+  name: McHammer
+  description: Can't touch this
+  departure: <%= Date.current %>
+  arrival: <%= Date.current %>
+  return: <%= Date.current %>
+  ticket_price: 1000
+  sales_lead: 0
+  comment: sey wat
+  direction: both_directions
+  maximum_seats: 0
