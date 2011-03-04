@@ -1,12 +1,14 @@
 class Ticket < ActiveRecord::Base
   DIRECTIONS = [:to_waterloo, :from_waterloo]
+	STATUSES = [:reserved, :paid, :void, :expired]
 
   belongs_to :user
   belongs_to :bus
 
-	validates_presence_of :user_id, :bus_id
+	validates_presence_of :user_id, :bus_id, :direction, :status
   
   symbolize :direction, :in => DIRECTIONS
+	symbolize :status, :in => STATUSES
 
 	validate :direction_must_apply_to_bus
 	validate :bus_must_have_seats_in_same_direction_as_ticket, :on => :create

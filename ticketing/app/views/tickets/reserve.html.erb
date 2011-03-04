@@ -7,3 +7,7 @@
 	<br />
 	<%= "In the direction: " + t.direction.to_s.humanize %> 
 <% end %>
+<% @userbuses_onticketdate.each do |t| %>
+	<br />
+	<%= "WAT: " + t.to_s %>
+<% end %>

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+gem 'rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -35,5 +35,6 @@ gem "validates_timeliness", '~> 3.0.2' # If updated, run
 											# rails generate validates_timeliness:install
 gem "mail", '2.2.15'
 gem "highline"
+gem "symbolize"
 gem "dynamic_form"
 gem "ruby-debug19"

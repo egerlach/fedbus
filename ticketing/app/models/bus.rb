@@ -60,7 +60,11 @@ class Bus < ActiveRecord::Base
 
 	def available_tickets(direction)
 		if self.direction == DIRECTIONS[0] || direction == self.direction
-			return self.maximum_seats - (self.tickets.select { |t| t.direction == direction }).count
+			if self.status == :open
+				return 9999
+			else
+				return self.maximum_seats - (self.tickets.select { |t| t.direction == direction }).count
+			end
 		else
 			return 0
 		end

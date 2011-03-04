@@ -18,7 +18,8 @@ Ticketing::Application.routes.draw do
 	          :permissions, :roles, :users 
 	resource :admin, :controller => 'admin'
 	#match "/admin(.:format)" => "admin#index"
-	match 'buses/today.:format', :to => 'buses#today'
+	#match 'buses/today.:format', :to => 'buses#today'
+	match 'browse' => 'tickets#browse'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

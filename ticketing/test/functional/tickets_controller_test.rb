@@ -56,7 +56,7 @@ class TicketsControllerTest < ActionController::TestCase
 	test "should create ticket for user with tickets permission" do
 		with_permission :tickets
 		assert_difference('Ticket.count', 1) do
-			post :create, :ticket => { :direction => :to_waterloo, :user => users(:one), :bus => buses(:one) }
+			post :create, :ticket => { :direction => :from_waterloo, :user => users(:one), :bus => buses(:one), :status => :paid }
 		end
 
 		assert_redirected_to ticket_path(assigns(:ticket))
@@ -122,7 +122,7 @@ class TicketsControllerTest < ActionController::TestCase
 
 	test "should update ticket for user with tickets permission" do
 		with_permission :tickets
-		put :update, :id => tickets(:one).to_param, :ticket => { }
+		put :update, :id => tickets(:one).to_param, :ticket => tickets(:two)
 		assert_redirected_to ticket_path(assigns(:ticket))
 	end
 

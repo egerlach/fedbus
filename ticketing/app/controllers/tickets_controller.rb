@@ -102,6 +102,18 @@ class TicketsController < ApplicationController
 		@bus = Bus.find(params[:bus_id])
 		@direction = params[:bus]["direction"].to_sym
 
+		@userbuses_onticketdate = current_user.tickets.select do |t|
+			if(@direction == Bus::DIRECTIONS[1]) # :to_waterloo
+				t.bus.departure.to_date == @bus.departure.to_date
+			else
+				t.bus.arrival.to_date == @bus.arrival.to_date
+			end
+		end
+
+		if(!@userbuses_onticketdate.empty?)
+			redirect_to tickets_url and return
+		end
+
 		@dirs = []
 		if(@direction != Bus::DIRECTIONS[0])
 			@dirs << @direction

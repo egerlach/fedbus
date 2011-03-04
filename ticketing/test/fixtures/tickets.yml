@@ -6,13 +6,16 @@
    direction: to_waterloo
    user_id: 1
    bus: two
+   status: paid
 
  two:
    direction: from_waterloo
    user_id: 2
    bus: one
+   status: paid
 
  three:
    direction: to_waterloo
    user: one
    bus: valid
+   status: paid

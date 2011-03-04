@@ -27,7 +27,7 @@ friday:
 sunday:
   name: Sunday Bus
   destination: Aperture Science Lab
-  weekday: <%= DateTime.now.wday + 2 %>
+  weekday: <%= (DateTime.now.wday + 2) % 7 %>
   departure: "06:00:00"
   arrival: "08:00:00"
   return: "10:00:00"
