@@ -10,6 +10,10 @@
   <b>Bus:</b>
   <%=h @ticket.bus.to_s %>
 <p>
- 
+<p>
+	<b>Status:</b>
+	<%=h @ticket.status.to_s.humanize %>
+</p>
+
 <%= link_to 'Edit', edit_ticket_path(@ticket) %> |
 <%= link_to 'Back', tickets_path %>

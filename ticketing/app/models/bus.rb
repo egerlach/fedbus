@@ -63,7 +63,7 @@ class Bus < ActiveRecord::Base
 			if self.status == :open
 				return 9999
 			else
-				return self.maximum_seats - (self.tickets.select { |t| t.direction == direction }).count
+				return self.maximum_seats - (self.tickets.select { |t| t.direction == direction and t.status_valid? }).count
 			end
 		else
 			return 0

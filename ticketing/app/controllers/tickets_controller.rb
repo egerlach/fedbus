@@ -102,15 +102,14 @@ class TicketsController < ApplicationController
 		@bus = Bus.find(params[:bus_id])
 		@direction = params[:bus]["direction"].to_sym
 
-		@userbuses_onticketdate = current_user.tickets.select do |t|
+		@date =
 			if(@direction == Bus::DIRECTIONS[1]) # :to_waterloo
-				t.bus.departure.to_date == @bus.departure.to_date
+				@bus.departure.to_date
 			else
-				t.bus.arrival.to_date == @bus.arrival.to_date
+				@bus.arrival.to_date
 			end
-		end
 
-		if(!@userbuses_onticketdate.empty?)
+		if(!current_user.tickets_for_date(@date).empty?)
 			redirect_to tickets_url and return
 		end
 
@@ -129,12 +128,17 @@ class TicketsController < ApplicationController
 			@dirs = @dirs[1..-1]
 			t.bus = @bus
 			t.user = current_user
+			t.status = :reserved
 			t.save!
 		end
 
 		respond_to do |format|
 			format.html
 		end
+	end
+
+	def expire
+		Ticket.expire
 	end
 
 end

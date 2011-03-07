@@ -153,4 +153,25 @@ class TicketsControllerTest < ActionController::TestCase
 
 		assert_redirected_to tickets_path
 	end
+
+	test "should not do expire action for unauthenticated user" do
+		get :expire
+
+		assert_response :redirect
+	end
+
+	test "should not do expire action for authenticated user without tickets permission" do
+		@request.session[:userid] = users(:one).userid
+		get :expire
+
+		assert_response :forbidden
+	end
+
+	test "should expire tickets for authenticated users with tickets permission" do
+		with_permission :tickets
+		get :expire
+
+		assert_response :success
+	end
+
 end

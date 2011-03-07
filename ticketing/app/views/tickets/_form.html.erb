@@ -4,5 +4,9 @@
     <%= f.label :direction %><br />
     <%= f.select :direction, Ticket::DIRECTIONS.collect {|x| [x.to_s.humanize, x]} %>
   </p>
+	<p>
+		<%= f.label :status %><br />
+		<%= f.select :status, Ticket::STATUSES.collect {|x| [x.to_s.humanize, x]} %>
+	</p>
 
 

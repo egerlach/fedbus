@@ -39,6 +39,7 @@ Ticketing::Application.routes.draw do
 		collection do
 			get 'browse'
 			post 'reserve'
+			get 'expire'
 		end
 	end
 

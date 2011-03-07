@@ -1,13 +1,18 @@
 <%= "Tickets have been reserved for " + @ticket[0].user.to_s %>
 <% @ticket.each do |t| %>
 	<br />
-	<%= link_to "Ticket ", t %>
+	<%= link_to "Ticket " + t.id.to_s, t %>
 	<br />
 	<%= "For the bus: " + @bus.name %>
 	<br />
 	<%= "In the direction: " + t.direction.to_s.humanize %> 
+	<br />
+	<% t.errors.each do |e| %>
+		<br />
+		<%= "Error: " + e.to_s %>
+	<% end %>
 <% end %>
-<% @userbuses_onticketdate.each do |t| %>
+<% current_user.tickets_for_date(@date).each do |t| %>
 	<br />
 	<%= "WAT: " + t.to_s %>
 <% end %>

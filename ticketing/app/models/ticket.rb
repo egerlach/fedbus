@@ -22,4 +22,24 @@ class Ticket < ActiveRecord::Base
 		errors.add(:bus, "bus has no available seats in ticket's direction") if
 			!bus.nil? && !direction.nil? && bus.available_tickets(direction) <= 0
 	end
+
+	# valid = true returns tickets whose status is either paid or reserved
+	# valid = false returns tickets whose status is either void or expired
+	def status_valid? valid = true
+		if valid
+			Ticket::STATUSES[0..1].include? status
+		else
+			Ticket::STATUSES[2..-1].include? status
+		end
+	end
+
+	def self.expire
+		@ticketz = Ticket.where ["created_at <= ? and STATUS = ?", Time.now - 15.minutes, :reserved]
+		
+		@ticketz.each do |t|
+			t.status = :expired
+			t.save!
+		end
+	end
+
 end

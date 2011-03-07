@@ -57,4 +57,18 @@ class User < ActiveRecord::Base
 
     return roles.any? { |role| role.permissions.include? permission }
   end
+
+	def tickets_for_date date, valid = true
+		tickets.select do |t|
+			if(t.status_valid? valid)
+				if(t.direction == Bus::DIRECTIONS[2]) # :from_waterloo
+					t.bus.departure.to_date == date
+				else
+					t.bus.arrival.to_date == date
+				end
+			else
+				false
+			end
+		end
+	end
 end
