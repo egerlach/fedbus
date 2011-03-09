@@ -144,10 +144,10 @@ class TicketsControllerTest < ActionController::TestCase
 		assert_response :forbidden
 	end
 
-	test "should destroy ticket for user with the tickets permission" do
+	test "should not destroy ticket for user with the tickets permission" do
 		with_permission :tickets
 
-		assert_difference('Ticket.count', -1) do
+		assert_difference('Ticket.count', 0) do
 			delete :destroy, :id => tickets(:one).to_param
 		end
 

@@ -3,14 +3,18 @@
 <table>
   <tr>
 		<td>Ticket Number</td>
+		<td>Ticket Status</td>
+		<td>Owner UWID</td>
   </tr>
 
 <% @tickets.each do |ticket| %>
   <tr>
 		<td><%= ticket.id.to_s %></td>
+		<td><%= ticket.status.to_s.humanize %></td>
+		<td><%= link_to "#{(a = ticket.user) ? a.userid : a}", ticket.user %></td>
     <td><%= link_to 'Show', ticket %></td>
     <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
-    <td><%= link_to 'Destroy', ticket, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%# link_to 'Destroy', ticket, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

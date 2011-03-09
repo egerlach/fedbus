@@ -6,11 +6,11 @@
 		<th>Departure</th>
 		<th>Arrival</th>
 		<th>Return</th>
-		<th>Tickets Available To/From</th>
+		<th>Tickets Available<br />From Waterloo/To Waterloo</th>
 		<th>Buy</th>
 	</tr>
 
-	<% @buses.each do |bus| %>
+			<% @buses.each do |bus| %>
 		<%= form_tag "/tickets/reserve" do %>
 			<%= render :partial => "bus", :locals => {:bus => bus} %>
 		<% end %>

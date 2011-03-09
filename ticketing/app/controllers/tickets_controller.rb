@@ -17,9 +17,6 @@ class TicketsController < ApplicationController
   # GET /tickets/1
   # GET /tickets/1.xml
   def show
-		#permission_required(:tickets) unless  logged_in? && 
-		#							           current_user == Ticket.find(params[:id]).user 
-
     @ticket = Ticket.find(params[:id])
 
     respond_to do |format|
@@ -47,14 +44,22 @@ class TicketsController < ApplicationController
   # POST /tickets
   # POST /tickets.xml
   def create
-    @ticket = Ticket.new(params[:ticket])
+    @ticket = Ticket.new(params[:ticket] )
 
     respond_to do |format|
-      if @ticket.save
-        flash[:notice] = 'Ticket was successfully created.'
-        format.html { redirect_to(@ticket) }
-        format.xml  { render :xml => @ticket, :status => :created, :location => @ticket }
+      if @ticket.valid?
+				if TicketLog.make_log(params[:log], @ticket, current_user)
+					@ticket.save
+					flash[:notice] = 'Ticket was successfully created.'
+					format.html { redirect_to(@ticket) }
+					format.xml  { render :xml => @ticket, :status => :created, :location => @ticket }
+				else
+					@ticket.errors.add :log, "entry cannot be blank"
+					format.html { render :action => "new" }
+					format.xml  { render :xml => @ticket.errors, :status => :unprocessable_entity }
+				end
       else
+				@ticket.save
         format.html { render :action => "new" }
         format.xml  { render :xml => @ticket.errors, :status => :unprocessable_entity }
       end
@@ -81,13 +86,15 @@ class TicketsController < ApplicationController
   # DELETE /tickets/1
   # DELETE /tickets/1.xml
   def destroy
-    @ticket = Ticket.find(params[:id])
-    @ticket.destroy
+    #@ticket = Ticket.find(params[:id])
+    #@ticket.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(tickets_url) }
-      format.xml  { head :ok }
-    end
+    #respond_to do |format|
+    #  format.html { redirect_to(tickets_url) }
+    #  format.xml  { head :ok }
+    #end
+		
+		redirect_to(tickets_url)
   end
 
 	def browse
@@ -101,44 +108,39 @@ class TicketsController < ApplicationController
 	def reserve
 		@bus = Bus.find(params[:bus_id])
 		@direction = params[:bus]["direction"].to_sym
+		@errors = nil
 
-		@date =
-			if(@direction == Bus::DIRECTIONS[1]) # :to_waterloo
-				@bus.departure.to_date
-			else
+		@date = 
+			if(@direction == Ticket::DIRECTIONS[1]) # :to_waterloo
 				@bus.arrival.to_date
+			elsif(@direction == Ticket::DIRECTIONS[0]) #:from_waterloo
+				@bus.departure.to_date
 			end
 
-		if(!current_user.tickets_for_date(@date).empty?)
-			redirect_to tickets_url and return
+		@tickets_on_date = current_user.tickets_for_date(@date)
+		if(!@tickets_on_date.empty?)
+			@errors = "You already have a ticket on " + @date.to_s
+			return
 		end
 
-		@dirs = []
-		if(@direction != Bus::DIRECTIONS[0])
-			@dirs << @direction
-		else
-			@dirs = Ticket::DIRECTIONS
-		end
+		@ticket = Ticket.new
 
-		@ticket = [] << Ticket.new
-		@ticket << Ticket.new if(@direction == Bus::DIRECTIONS[0])
+		@ticket.bus = @bus
+		@ticket.user = current_user
+		@ticket.status = :reserved
+		@ticket.direction = @direction
+		@ticket.save!
 
-		@ticket.each do |t|
-			t.direction = @dirs[0]
-			@dirs = @dirs[1..-1]
-			t.bus = @bus
-			t.user = current_user
-			t.status = :reserved
-			t.save!
-		end
+		l = TicketLog.new
+		l.user = current_user
+		l.ticket = @ticket
+		l.log = "Reserved ticket"
+		l.save!
 
-		respond_to do |format|
-			format.html
-		end
 	end
 
 	def expire
-		Ticket.expire
+		@expired = Ticket.expire
 	end
 
 end

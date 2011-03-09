@@ -1,6 +1,6 @@
 class Bus < ActiveRecord::Base
   STATUSES = [:open, :locked]
-  DIRECTIONS = [:both_directions, :to_waterloo, :from_waterloo]
+  DIRECTIONS = [:both_directions, :from_waterloo, :to_waterloo]
 
   symbolize :status, :in => STATUSES
   symbolize :direction, :in => DIRECTIONS

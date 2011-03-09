@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Log:</b>
+  <%= @ticket_log.log %>
+</p>
+
+<p>
+  <b>Ticket:</b>
+  <%= link_to "Ticket #{@ticket_log.ticket.id.to_s}", @ticket_log.ticket %>
+</p>
+
+<p>
+  <b>User:</b>
+  <% if @ticket_log.user %>
+		<td><%= link_to "#{@ticket_log.user.userid}", @ticket_log.user %></td>
+	<% else %>
+		<td>System</td>
+	<% end %>
+</p>
+
+
+<%# link_to 'Edit', edit_ticket_log_path(@ticket_log) %> 
+<%= link_to 'Back', ticket_logs_path %>

@@ -1,0 +1,30 @@
+<h1>Listing ticket_logs</h1>
+
+<table>
+  <tr>
+    <th>Log</th>
+    <th>Ticket</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ticket_logs.each do |ticket_log| %>
+  <tr>
+    <td><%= ticket_log.log %></td>
+		<td><%= link_to "Ticket #{ticket_log.ticket.id.to_s}", ticket_log.ticket %></td>
+		<% if ticket_log.user %>
+			<td><%= link_to "#{ticket_log.user.userid}", ticket_log.user %></td>
+		<% else %>
+			<td>System</td>
+		<% end %>
+    <td><%# link_to 'Show', ticket_log %></td>
+    <td><%# link_to 'Edit', edit_ticket_log_path(ticket_log) %></td>
+    <td><%# link_to 'Destroy', ticket_log, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%# link_to 'New Ticket log', new_ticket_log_path %>

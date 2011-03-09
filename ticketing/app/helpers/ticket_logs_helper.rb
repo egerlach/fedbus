@@ -1,0 +1,2 @@
+module TicketLogsHelper
+end

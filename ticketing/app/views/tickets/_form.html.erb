@@ -1,5 +1,13 @@
   <%= f.error_messages %>
 
+	<p>
+		<%= f.label :user %><br />
+		<%= collection_select :ticket, :user_id, User.all, :id, :userid %>
+	</p>
+	<p>
+		<%= f.label :bus %><br />
+		<%= collection_select :ticket, :bus_id, Bus.all, :id, :name %>
+	</p>
   <p>
     <%= f.label :direction %><br />
     <%= f.select :direction, Ticket::DIRECTIONS.collect {|x| [x.to_s.humanize, x]} %>
@@ -7,6 +15,10 @@
 	<p>
 		<%= f.label :status %><br />
 		<%= f.select :status, Ticket::STATUSES.collect {|x| [x.to_s.humanize, x]} %>
+	</p>
+	<p>
+		<%= label_tag :log, "Log message" %><br />
+		<%= text_area_tag :log %>
 	</p>
 
 
