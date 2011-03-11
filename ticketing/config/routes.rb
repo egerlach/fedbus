@@ -16,7 +16,7 @@ Ticketing::Application.routes.draw do
 #  map.resources :users
 #  map.resources :admin
 
-	resources :reading_weeks, :blackouts, :holidays, :trips, :buses,
+	resources :reading_weeks, :blackouts, :holidays, :buses,
 	          :permissions, :roles, :users 
 	resource :admin, :controller => 'admin'
 	#match "/admin(.:format)" => "admin#index"
@@ -42,6 +42,13 @@ Ticketing::Application.routes.draw do
 			get 'browse'
 			post 'reserve'
 			get 'expire'
+			get 'buy'
+		end
+	end
+
+	resources :trips do
+		collection do
+			get 'generate'
 		end
 	end
 
@@ -82,7 +89,7 @@ Ticketing::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => "welcome#index"
   #map.root :controller => :users
-	root :to => 'users#index'
+	root :to => 'tickets#buy'
 
   # See how all your routes lay out with "rake routes"
   #map.login '/login', :controller => :users, :action => :login

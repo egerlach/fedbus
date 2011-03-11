@@ -91,15 +91,18 @@ class TripsController < ApplicationController
   # GET /trips/generate
   def generate
     @trips = Trip.all
+		@created = 0
 
     # Create Buses from trips that are within the sales_lead of now
-    now = DateTime.now
+    now = Date.today
 
     day_start = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T00:00:00", "%FT%T")
     day_end   = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T23:59:59", "%FT%T")
 
     # Create Buses if a Trip has no Bus for the current cycle
     @trips.each do |trip|
+			@created += trip.buses.count
+
       # How many buses should exist into the future?
       if trip.weekday - now.wday < 0
         buses = (trip.sales_lead/7).floor + (trip.weekday - now.wday + 7 >= trip.sales_lead ? 1 : 0)
@@ -129,23 +132,31 @@ class TripsController < ApplicationController
         if (trip.buses.select{ |b| day_start + trip_offset + week*7 + exception_offset < b.departure && 
                                 day_end   + trip_offset + week*7 + exception_offset > b.departure }).count < 1
           b = Bus.new_from_trip(trip, Date.today + trip_offset + week*7 + exception_offset) 
-          trip.buses << b unless Blackout.blackedout?(b.departure) or ReadingWeek.blackedout?(b.departure) or trip.has_bus?(b)
+          unless Blackout.blackedout?(b.departure) or ReadingWeek.blackedout?(b.departure) or trip.has_bus?(b)
+						trip.buses << b
+						b.save
+						@created += 1
+					end
         end
       end
 
 		# Just testing/kidding
-		trip.buses.each do |b|
-			logger.info "wtf is this crap."
-			logger.info b.to_s
-		end
+		#trip.buses.each do |b|
+		#	logger.info "wtf is this crap."
+		#	logger.info b.to_s
+		#end
+		
+			
 
     end
 
     # Redirect the user back to trips
-    respond_to { |format|
-      format.html { redirect_to(trips_path) }
-      format.xml  { reditect_to(trips_path) } 
-    }
+    #respond_to { |format|
+    #  format.html { redirect_to(trips_path) }
+    #  format.xml  { reditect_to(trips_path) } 
+    #}
+
+		
   end
 
   # Helper functions

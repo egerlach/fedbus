@@ -56,7 +56,7 @@ class TicketsControllerTest < ActionController::TestCase
 	test "should create ticket for user with tickets permission" do
 		with_permission :tickets
 		assert_difference('Ticket.count', 1) do
-			post :create, :ticket => { :direction => :from_waterloo, :user => users(:one), :bus => buses(:one), :status => :paid }
+			post :create, :ticket => { :direction => :from_waterloo, :user => users(:one), :bus => buses(:one), :status => :paid }, :log => "controller test" 
 		end
 
 		assert_redirected_to ticket_path(assigns(:ticket))
@@ -122,7 +122,7 @@ class TicketsControllerTest < ActionController::TestCase
 
 	test "should update ticket for user with tickets permission" do
 		with_permission :tickets
-		put :update, :id => tickets(:one).to_param, :ticket => tickets(:two)
+		put :update, :id => tickets(:one).to_param, :ticket => tickets(:two), :log => "controller test" 
 		assert_redirected_to ticket_path(assigns(:ticket))
 	end
 
@@ -174,4 +174,16 @@ class TicketsControllerTest < ActionController::TestCase
 		assert_response :success
 	end
 
+	test "should not get buy for unauthenticated users" do
+		get :buy
+
+		assert_response :redirect
+	end
+
+	test "should get buy for authenticated users" do
+		@request.session[:userid] = users(:one).userid
+		get :buy
+
+		assert_response :success
+	end
 end

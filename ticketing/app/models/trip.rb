@@ -20,13 +20,13 @@ class Trip < ActiveRecord::Base
   end
 
   def has_bus? bus
-	@buses = self.buses
+		@buses = self.buses
 
-	buses.each do |b|
-		return true if bus.to_s.eql? b.to_s
-	end
+		buses.each do |b|
+			return true if bus.to_s.eql? b.to_s
+		end
 
-	return false
+		return false
   end
 
 

@@ -1,8 +1,10 @@
 class TicketsController < ApplicationController
-	before_filter permission_required(:tickets), :except => [:show, :browse]
+	before_filter permission_required(:tickets), :except => [:show, :browse, :buy]
 	before_filter permission_required(:tickets), :only => [:show],
      	            :unless => lambda { |c| c.logged_in? && 
 									           c.current_user == Ticket.find(c.params[:id]).user }
+	before_filter :login_required, :only => [:buy]
+
   # GET /tickets
   # GET /tickets.xml
   def index
@@ -71,12 +73,22 @@ class TicketsController < ApplicationController
   def update
     @ticket = Ticket.find(params[:id])
 
+		@ticket.attributes = params[:ticket]
+
     respond_to do |format|
-      if @ticket.update_attributes(params[:ticket])
-        flash[:notice] = 'Ticket was successfully updated.'
-        format.html { redirect_to(@ticket) }
-        format.xml  { head :ok }
+      if @ticket.valid?
+				if TicketLog.make_log(params[:log], @ticket, current_user)
+					@ticket.save
+					flash[:notice] = 'Ticket was successfully updated.'
+					format.html { redirect_to(@ticket) }
+					format.xml  { head :ok }
+				else
+					@ticket.errors.add :log, "entry cannot be blank"
+					format.html { render :action => "edit" }
+					format.xml { render :xml => @ticket.errors, :status => :unprocessable_entity }
+				end
       else
+				@ticket.save
         format.html { render :action => "edit" }
         format.xml  { render :xml => @ticket.errors, :status => :unprocessable_entity }
       end
@@ -132,7 +144,6 @@ class TicketsController < ApplicationController
 		@ticket.save!
 
 		l = TicketLog.new
-		l.user = current_user
 		l.ticket = @ticket
 		l.log = "Reserved ticket"
 		l.save!
@@ -141,6 +152,15 @@ class TicketsController < ApplicationController
 
 	def expire
 		@expired = Ticket.expire
+	end
+
+	def buy
+		@buses = Bus.where ["departure >= ?", Date.today]
+		@days = []
+		@buses.each do |bus|
+			@days << bus.departure.to_date unless @days.member? bus.departure.to_date
+		end
+
 	end
 
 end
