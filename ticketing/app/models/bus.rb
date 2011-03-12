@@ -8,6 +8,7 @@ class Bus < ActiveRecord::Base
   validates_length_of :name, :minimum => 1
 
   validates_numericality_of :maximum_seats, :greater_than_or_equal_to => 0
+	validates_numericality_of :ticket_price, :greater_than_or_equal_to => 0
 
   validates_datetime :departure#, :on_or_after => :today
   validates_datetime :arrival#, :on_or_after => :departure
@@ -22,7 +23,8 @@ class Bus < ActiveRecord::Base
       :direction => :both_directions,
       :name => trip.name,
       :maximum_seats => 50,
-      :departure => cat_date_time(dep_date, trip.departure)
+      :departure => cat_date_time(dep_date, trip.departure),
+			:ticket_price => trip.ticket_price
                  }
       )    
 

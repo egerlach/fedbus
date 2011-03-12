@@ -20,7 +20,7 @@ friday:
   arrival: "17:00:00"
   return: "17:59:00"
   ticket_price: 1.5
-  sales_lead: 7 # Sell tickets 7 days in the future every week
+  sales_lead: 6 # Sell tickets 6 days in the future every week
   comment: "Duke Nukem"
   return_trip: 2
 
@@ -32,7 +32,7 @@ sunday:
   arrival: "08:00:00"
   return: "10:00:00"
   ticket_price: 1.5
-  sales_lead: 7
+  sales_lead: 6
   comment: "STFU"
   return_trip: -2
 
@@ -44,6 +44,6 @@ long_trip:
   arrival: "23:59:59"
   return: "02:00:00"
   ticket_price: 1.5
-  sales_lead: 14
+  sales_lead: 13
   comment: "RTFM"
   return_trip: -2

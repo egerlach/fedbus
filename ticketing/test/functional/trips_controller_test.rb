@@ -148,7 +148,7 @@ class TripsControllerTest < ActionController::TestCase
     setup_authenticated_user_with_permission :tester, :trips
     get :generate
 
-    assert_redirected_to trips_path
+    assert_response :success
   end
 
   test "should generate 5 buses from trips fixtures one, friday, sunday and long_trip" do

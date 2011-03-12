@@ -96,29 +96,25 @@ class TripsController < ApplicationController
     # Create Buses from trips that are within the sales_lead of now
     now = Date.today
 
-    day_start = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T00:00:00", "%FT%T")
-    day_end   = DateTime.strptime(DateTime.now.strftime("%Y-%m-%d") + "T23:59:59", "%FT%T")
-
     # Create Buses if a Trip has no Bus for the current cycle
     @trips.each do |trip|
-			@created += trip.buses.count
+			buses = 0
 
       # How many buses should exist into the future?
-      if trip.weekday - now.wday < 0
-        buses = (trip.sales_lead/7).floor + (trip.weekday - now.wday + 7 >= trip.sales_lead ? 1 : 0)
-      else
-        buses = (trip.sales_lead/7).floor + (trip.weekday - now.wday >= trip.sales_lead ? 1 : 0)
-      end
+			days_in_future = (trip.weekday - now.wday) % 7
+			sell_ahead = trip.sales_lead
+
+			while sell_ahead >= days_in_future
+				buses += 1
+				sell_ahead -= 7
+			end
 
       next if buses < 1
 
-      # Are there buses on each day there need to be?
-      # If not create them
-      trip_offset = trip.weekday - now.wday
-      trip_offset += 7 if trip_offset < 0
-
+      # Are there buses on each day there needs to be?
+      # If not, create them
       (0..buses-1).each do |week|
-        trip_date = Date.strptime((day_start+trip_offset+week*7).strftime("%Y-%m-%d"))
+        trip_date = now + week.weeks
         holiday_offset = Holiday.offset(trip_date)
         reading_offset = ReadingWeek.offset(trip_date)
 
@@ -129,32 +125,18 @@ class TripsController < ApplicationController
                              reading_offset
                            end
 
-        if (trip.buses.select{ |b| day_start + trip_offset + week*7 + exception_offset < b.departure && 
-                                day_end   + trip_offset + week*7 + exception_offset > b.departure }).count < 1
-          b = Bus.new_from_trip(trip, Date.today + trip_offset + week*7 + exception_offset) 
-          unless Blackout.blackedout?(b.departure) or ReadingWeek.blackedout?(b.departure) or trip.has_bus?(b)
-						trip.buses << b
-						b.save
-						@created += 1
-					end
-        end
-      end
+				b = Bus.new_from_trip(trip, Date.today + days_in_future + week.weeks + exception_offset)
+				unless Blackout.blackedout?(b.departure) or ReadingWeek.blackedout?(b.departure) or trip.has_bus?(b)
+					trip.buses << b
+					b.save
+					@created += 1
+				end
+			end
 
-		# Just testing/kidding
-		#trip.buses.each do |b|
-		#	logger.info "wtf is this crap."
-		#	logger.info b.to_s
-		#end
-		
-			
+	
 
     end
 
-    # Redirect the user back to trips
-    #respond_to { |format|
-    #  format.html { redirect_to(trips_path) }
-    #  format.xml  { reditect_to(trips_path) } 
-    #}
 
 		
   end
