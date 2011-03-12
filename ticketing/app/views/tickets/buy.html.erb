@@ -1,7 +1,26 @@
 <p>
 	Buses leave on these days:
 </p>
-<% @days.each do |day| %>
-	<%= day.to_s %>
-	<br />
+<table>
+		<tr>
+			<td>Travelling to: </td>
+			<td><%= select "bus", "destination", @forward.map { |bus| bus.trip ? bus.trip.destination.to_s : bus.name }  %></td>
+			<td></td>
+		</tr>
+	<% @backward.each do |bus| %>
+		<tr>
+			<td>Travelling from: </td>
+			<td><%= "#{bus.trip ? bus.trip.destination.to_s : bus.name }" %></td>
+			<td><%= "on #{bus.departure.to_date.to_s}" %></td>
+		</tr>
+	<% end %>
+</table>
+<table>
+<% @buses.each do |bus| %>
+	<tr>
+		<td><%= "#{bus.trip ? (bus.trip.return_trip >= 0 ? "Travelling to" : "Returning from") : "Traveling to" }" %></td>
+		<td><%= "#{bus.trip ? bus.trip.destination.to_s : bus.name }" %></td>
+		<td><%= "on #{bus.departure.to_date.to_s}" %></td>
+	</tr>
 <% end %>
+</table>

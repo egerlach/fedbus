@@ -24,7 +24,8 @@ class Bus < ActiveRecord::Base
       :name => trip.name,
       :maximum_seats => 50,
       :departure => cat_date_time(dep_date, trip.departure),
-			:ticket_price => trip.ticket_price
+			:ticket_price => trip.ticket_price,
+			:trip => trip
                  }
       )    
 

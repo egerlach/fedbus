@@ -156,10 +156,8 @@ class TicketsController < ApplicationController
 
 	def buy
 		@buses = Bus.where ["departure >= ?", Date.today]
-		@days = []
-		@buses.each do |bus|
-			@days << bus.departure.to_date unless @days.member? bus.departure.to_date
-		end
+		@forward = @buses.select { |bus| bus.available_tickets :from_waterloo }
+		@backward = @buses.select { |bus| bus.available_tickets :to_waterloo }
 
 	end
 

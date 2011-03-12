@@ -53,5 +53,10 @@
   <%=h @bus.maximum_seats %>
 </p>
 
+<p>
+	<b>Trip:</b>
+	<%=h @bus.trip.name %>
+</p>
+
 <%= link_to 'Edit', edit_bus_path(@bus) %> |
 <%= link_to 'Back', buses_path %>
