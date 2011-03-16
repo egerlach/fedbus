@@ -156,9 +156,18 @@ class TicketsController < ApplicationController
 
 	def buy
 		@buses = Bus.where ["departure >= ?", Date.today]
-		@forward = @buses.select { |bus| bus.available_tickets :from_waterloo }
-		@backward = @buses.select { |bus| bus.available_tickets :to_waterloo }
+		@earliestdate = (@buses.inject { |d1, d2| d1.departure.to_date <= d2.departure.to_date ? d1 : d2 }).departure.to_date
+		@forward = @buses.select do |bus| 
+			bus.available_tickets :from_waterloo and
+			bus.departure.to_date == @earliestdate
+		end
+		@backward = @buses.select do |bus| 
+			bus.available_tickets :to_waterloo and
+			bus.departure.to_date != @earliestdate
+		end
 
+		@dayto = @forward[0] ? Time::RFC2822_DAY_NAME[@forward[0].departure.wday] : nil
+		@dayfrom = @backward[0] ? Time::RFC2822_DAY_NAME[@backward[0].departure.wday] : nil
 	end
 
 end

@@ -73,6 +73,26 @@ class Bus < ActiveRecord::Base
 		end
 	end
 
+	def destination_and_time_from
+		destination + " at " + direction_start_time(:from_waterloo)
+	end
+
+	def destination_and_time_to
+		destination + " at " + direction_start_time(:to_waterloo)
+	end
+	
+	def destination
+		(trip ? trip.destination.to_s : name)
+	end
+
+	def direction_start_time(dir)
+		if dir == DIRECTIONS[1]
+			departure.strftime("%H:%m:%S")
+		else
+			arrival.strftime("%H:%m:%S")
+		end
+	end
+
   private
 
   def self.cat_date_time date, time

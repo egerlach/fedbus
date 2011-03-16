@@ -55,7 +55,7 @@
 
 <p>
 	<b>Trip:</b>
-	<%=h @bus.trip.name %>
+	<%=h @bus.trip ? @bus.trip.name : nil %>
 </p>
 
 <%= link_to 'Edit', edit_bus_path(@bus) %> |
