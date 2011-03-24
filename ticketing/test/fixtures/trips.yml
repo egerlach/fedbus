@@ -2,7 +2,7 @@
 
 one:
   name: One
-  destination: Aperture Science Cake Party
+  destination: two
   weekday: <%= (DateTime.now.wday + 5) % 7 %> # 5 days in the future
   departure: "10:00:00"
   arrival: "12:00:00"
@@ -14,7 +14,7 @@ one:
 
 friday:
   name: Friday Bus
-  destination: Aperture Science Cake Party
+  destination: two
   weekday: <%= DateTime.now.wday %>
   departure: "16:00:00"
   arrival: "17:00:00"
@@ -26,7 +26,7 @@ friday:
 
 sunday:
   name: Sunday Bus
-  destination: Aperture Science Lab
+  destination: one
   weekday: <%= (DateTime.now.wday + 2) % 7 %>
   departure: "06:00:00"
   arrival: "08:00:00"
@@ -38,7 +38,7 @@ sunday:
 
 long_trip:
   name: Uber Trip
-  destination: Aperture Science Lab
+  destination: one
   weekday: <%= DateTime.now.wday %>
   departure: "00:00:00"
   arrival: "23:59:59"

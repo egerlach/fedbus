@@ -4,10 +4,10 @@ require 'logger'
 class TripsControllerTest < ActionController::TestCase
 
 	def trip
-		{ "name" => "MyString", "destination" => "MyString", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
+		{ "name" => "MyString", "destination" => Destination.new, "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
 	end
 	def trip2
-		{ "name" => "MyString that is different", "destination" => "MyString that is different", "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
+		{ "name" => "MyString that is different", "destination" => Destination.new, "weekday" => 1, "departure" => "12:19:35", "arrival" => "12:19:35", "return" => "12:19:35", "ticket_price" => 1.5, "sales_lead" => 1, "comment" => "MyText", "return_trip" => 1 }
 	end
 
   test "should get index for an unauthenticated user" do
@@ -210,8 +210,8 @@ Rails.logger.info "Current bus count: " + Bus.count.to_s
 
     # Were they created on the correct offset?
 Rails.logger.info "Before offset finding"
-    assert Bus.find_by_name("Sunday Bus").departure.strftime("%Y-%m-%d") == (Date.today + 2).strftime("%Y-%m-%d"), Bus.find_by_name("Sunday Bus").departure.strftime("%Y-%m-%d") 
-    assert Bus.find_by_name("Uber Trip" ).departure.strftime("%Y-%m-%d") == (Date.today + 1).strftime("%Y-%m-%d"), Bus.find_by_name("Uber Trip").departure.strftime("%Y-%m-%d")
+    assert Bus.find_by_name("Sunday Bus").departure.strftime("%F") == (Date.today + 2), Bus.find_by_name("Sunday Bus").departure.strftime("%F") 
+    assert Bus.find_by_name("Uber Trip" ).departure.strftime("%F") == (Date.today + 1), Bus.find_by_name("Uber Trip").departure.strftime("%F")
 Rails.logger.info "next bus creation"
     # Should not create buses that already exist
     assert_difference('Bus.count', 0) {

@@ -14,8 +14,11 @@ class Bus < ActiveRecord::Base
   validates_datetime :arrival#, :on_or_after => :departure
   validates_datetime :return#, :on_or_after => :arrival
 
+	validates_presence_of :destination
+
   belongs_to :trip
   has_many :tickets
+	belongs_to :destination
 
   def self.new_from_trip trip, dep_date
     b = Bus.new( {
@@ -87,9 +90,9 @@ class Bus < ActiveRecord::Base
 
 	def direction_start_time(dir)
 		if dir == DIRECTIONS[1]
-			departure.strftime("%H:%m:%S")
+			departure.strftime("%R")
 		else
-			arrival.strftime("%H:%m:%S")
+			arrival.strftime("%R")
 		end
 	end
 

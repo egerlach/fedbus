@@ -7,15 +7,14 @@ class ReadingWeek < ActiveRecord::Base
 
   def self.blackedout?(departure_datetime)
 
-    blackedout = false
+		departure_date = departure_datetime.to_date
 
     ReadingWeek.all.each do |rw|
-      departure_date = Date.civil(departure_datetime.year, departure_datetime.month, departure_datetime.day)
 
-      blackedout = true if ((departure_date >= rw.start_date) and (departure_date <= rw.end_date))
+      return true if ((departure_date >= rw.start_date) and (departure_date <= rw.end_date))
     end
 
-    return blackedout
+    false
   end
 
   def self.offset(date)

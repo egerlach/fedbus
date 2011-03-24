@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Aperture Science Lab
+  description: Fun times
+
+two:
+  name: Aperture Science Cake Party
+  description: Lies!

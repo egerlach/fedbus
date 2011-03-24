@@ -1,34 +1,46 @@
 <script type="text/javascript">
-	dirs = ["from", "to"]
+	var dirs = ["from", "to"]
 
-	// dir - index in the dirs list, 0 or 1
+	// dir - index in the dirs list, 0 or 1, for the 'non-other' trip direction
 	// id - Bus id to get matching trip for
 	function change_other_trip(dir, id)
 	{
+		var otherTicketSelect = document.getElementById("ticket_" + dirs[(dir + 1) % 2] + "_id");
+
+		if(!document.getElementById(dirs[(dir + 1) % 2]).checked ||
+				otherTicketSelect.selectedIndex != 0)
+			return
+
 		var table = document.getElementById("return_" + dirs[dir]);
 		var r = table.rows;
 		var l = r.length;
 		var c;
+		var newbus = 0;
 		while(l--)
 		{
 			c = r[l].cells;
-			//document.write(id.toString());
 			if(c[0].firstChild.nodeValue.toString() == id.toString())
-			{
 				newbus = c[1].firstChild.nodeValue;
-				document.write(1);
-			}
 		}
 
-		document.getElementById("ticket_" + dirs[(dir + 1) % 2] + "_id").selectedIndx = 1;
+		if(newbus)
+			otherTicketSelect.selectedIndex = newbus;
 	}
 </script>
+
+<!-- Hidden tables for javascript function -->
 
 <table style="display: none;" id="return_to">
 	<% @forward.each do |bus| %>
 		<tr>
 			<td><%= bus.id %></td>
-			<td><% @backward.each do |b| %><% if b.destination == bus.destination %><%= b.id %><% break %><% end %><% end %></td>
+			<td><% @backward.each_with_index do |b, i| %>
+						<% if b.destination == bus.destination %>
+							<%= i + 1 %>
+							<% break %>
+						<% end %>
+					<% end %>
+			</td>
 		</tr>
 	<% end %>
 </table>
@@ -37,27 +49,51 @@
 	<% @backward.each do |bus| %>
 		<tr>
 			<td><%= bus.id %></td>
-			<td><% @forward.each do |b| %><% if b.destination == bus.destination %><%= b.id %><% break %><% end %><% end %></td>
+			<td><% @forward.each_with_index do |b, i| %>
+						<% if b.destination == bus.destination %>
+							<%= i + 1 %>
+							<% break %>
+						<% end %>
+					<% end %>
+			</td>
 		</tr>
 	<% end %>
 </table>
+
+<!-- Here is where the visible page starts -->
 
 <p>
 	Select tickets:
 </p>
 <table>
 		<tr>
-			<td><%= check_box_tag 'to', '1', true %></td>
-			<td>Travelling to: </td>
-			<td><%= collection_select :ticket_to, :id, @forward, :id, :destination_and_time_from, { :include_blank => 'Select Destination'}, { :onchange => "change_other_trip(0, this.value);" }  %></td>
+			<td><%= check_box_tag 'to', '1', true, { :onchange => "change_other_trip(0, document.getElementById('ticket_from_id').value);"} %></td>
+			<td><%= @otherdir ? "Travelling from:" : "Travelling to:" %></td>
+			<td><% if @forward %>
+						<%= collection_select :ticket_to, :id, @forward, :id, :destination_and_time_from, { :include_blank => "Select #{ @otherdir ? 'Origin' : 'Destination'}"}, { :onchange => "change_other_trip(1, this.value);"} %>
+					<% else %>
+						<%= "No buses available" %>
+					<% end %>
+			</td>
 			<td><%= @dayto ? "on #{@dayto}" : nil %></td>
 		</tr>
+
 		<tr>
-			<td><%= check_box_tag 'from', '1', false %></td>
-			<td>Returning from: </td>
-			<td><%= collection_select :ticket_from, :id, @backward, :id, :destination_and_time_to, { :include_blank => 'Select Origin' }, { :onchange =>  "change_other_trip(1, this.value);" } %></td>
+			<td><%= check_box_tag 'from', '1', false,  { :onchange => "change_other_trip(1, document.getElementById('ticket_to_id').value);"} %></td>
+			<td><%= @otherdir ? "Returning to:" : "Returning from:" %> </td>
+			<td><% if @backward %>
+						<%= collection_select :ticket_from, :id, @backward, :id, :destination_and_time_to, { :include_blank => "Select #{ @otherdir ? 'Destination' : 'Origin'}" }, { :onchange =>  "change_other_trip(0, this.value);" } %>
+					<% else %>
+						<%= "No buses available" %>
+					<% end %>
+			</td>
 			<td><%= @dayfrom ? "on #{@dayfrom}" : nil %></td>
 	</tr>
-</table>
+</table>	
+
+
+<p>
+	<%= link_to "I am travelling in the other direction", root_path(:opposite => (@otherdir ? "0" : "1")) %>
+</p>
 
 

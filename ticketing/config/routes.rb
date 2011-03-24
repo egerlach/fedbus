@@ -1,4 +1,6 @@
 Ticketing::Application.routes.draw do 
+  resources :destinations
+
   resources :ticket_logs
 
 #	map.resources :reading_weeks

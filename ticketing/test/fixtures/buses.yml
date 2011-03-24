@@ -12,6 +12,7 @@ one:
   status: open
   direction: from_waterloo
   maximum_seats: 1
+  destination: one
 
 two:
   name: MyString
@@ -25,6 +26,7 @@ two:
   status: open
   direction: to_waterloo
   maximum_seats: 1
+  destination: two
 
 valid:
   name: MyString
@@ -38,6 +40,7 @@ valid:
   status: open
   direction: both_directions
   maximum_seats: 1
+  destination: one
 
 dummy_bus:
   name: BusForTicketFixtures
@@ -50,9 +53,10 @@ dummy_bus:
   comment: Duh
   direction: both_directions
   maximum_seats: 50
+  destination: one
 # Keep null_bus with 0 maximum_seats
 null_bus:
-  name: McHammer
+  name: MCHammer
   description: Can't touch this
   departure: <%= Date.current %>
   arrival: <%= Date.current %>
@@ -62,3 +66,4 @@ null_bus:
   comment: sey wat
   direction: both_directions
   maximum_seats: 0
+  destination: two

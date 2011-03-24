@@ -40,16 +40,22 @@ class BusesControllerTest < ActionController::TestCase
 
   test "should create bus for user with buses permission" do
     setup_authenticated_user_with_permission :tester, :buses
-    assert_difference('Bus.count') do
-      post :create, :bus => { 
+		bushash = { 
         :name => 'Something',
         :status => :open,
         :departure => Time.now,
         :arrival => Time.now,
         :return => Time.now,
         :direction => :both_directions,
-        :maximum_seats => 48
-      }
+        :maximum_seats => 48,
+				:ticket_price => 1,
+				:destination => Destination.new
+      } 
+		bus = Bus.new(bushash)
+
+		assert bus.valid?, bus.errors.inject("") { |e1, e2| e2.to_s + " " + e1 }
+    assert_difference('Bus.count') do
+      post :create, :bus => bushash
     end
 
     assert_redirected_to bus_path(assigns(:bus))

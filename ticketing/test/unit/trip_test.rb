@@ -21,11 +21,9 @@ class TripTest < ActiveSupport::TestCase
   end
 
   test "A trip must have a destination" do
-    assert assign_valid_value(trips(:one), :destination, "cake party"), "A destination should accept a non-enpty string."
- 
-    [nil, ""].each { |x|
-      assert assign_invalid_value(trips(:one), :destination, x), "A destination should not accept an empty string."
-    }
+		t1 = trips(:one)
+    t1.destination = nil
+		assert t1.invalid?, "Trip is valid without destination"
   end
 
   test "A trip must be on a day of the week" do

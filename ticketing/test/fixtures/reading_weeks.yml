@@ -4,7 +4,7 @@ one:
   start_date: 2010-10-13
   normal_return_date: 2010-10-14
   end_date: 2010-10-15
-  comment: MyText
+  comment: I'm irrelevant!
 
 test:
   start_date: <%= Date.today %>

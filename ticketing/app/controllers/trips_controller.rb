@@ -119,13 +119,10 @@ class TripsController < ApplicationController
         reading_offset = ReadingWeek.offset(trip_date)
 
         # If a holiday and a reading week are both there, choose the one that moves the trip more, though this should never happen.
-        exception_offset = if holiday_offset.abs > reading_offset.abs
-                             holiday_offset
-                           else
-                             reading_offset
-                           end
+        exception_offset = holiday_offset.abs > reading_offset.abs ?
+                             holiday_offset : reading_offset
 
-				b = Bus.new_from_trip(trip, Date.today + days_in_future + week.weeks + exception_offset)
+				b = Bus.new_from_trip(trip, now + days_in_future + week.weeks + exception_offset)
 				unless Blackout.blackedout?(b.departure) or ReadingWeek.blackedout?(b.departure) or trip.has_bus?(b)
 					trip.buses << b
 					b.save
