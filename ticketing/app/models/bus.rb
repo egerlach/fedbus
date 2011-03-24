@@ -28,7 +28,8 @@ class Bus < ActiveRecord::Base
       :maximum_seats => 50,
       :departure => cat_date_time(dep_date, trip.departure),
 			:ticket_price => trip.ticket_price,
-			:trip => trip
+			:trip => trip,
+			:destination => trip.destination
                  }
       )    
 
@@ -77,15 +78,11 @@ class Bus < ActiveRecord::Base
 	end
 
 	def destination_and_time_from
-		destination + " at " + direction_start_time(:from_waterloo)
+		destination.name + " at " + direction_start_time(:from_waterloo)
 	end
 
 	def destination_and_time_to
-		destination + " at " + direction_start_time(:to_waterloo)
-	end
-	
-	def destination
-		(trip ? trip.destination.to_s : name)
+		destination.name + " at " + direction_start_time(:to_waterloo)
 	end
 
 	def direction_start_time(dir)

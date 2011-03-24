@@ -8,6 +8,10 @@
     <%= f.label :description %><br />
     <%= f.text_field :description %>
   </p>
+	<p>
+		<%= f.label :destination %><br />
+		<%= collection_select :bus, :destination_id, Destination.all, :id, :name %>
+	</p>
   <p>
     <%= f.label :departure %><br />
     <%= f.datetime_select :departure %>

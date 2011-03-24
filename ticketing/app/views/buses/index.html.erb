@@ -3,12 +3,11 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Description</th>
+		<th>Destination</th>
     <th>Departure</th>
     <th>Arrival</th>
     <th>Return</th>
     <th>Ticket price</th>
-    <th>Comment</th>
     <th>Status</th>
     <th>Direction</th>
     <th>Max. Seats</th>
@@ -17,12 +16,11 @@
 <% @buses.each do |bus| %>
   <tr>
     <td><%=h bus.name %></td>
-    <td><%=h bus.description %></td>
+		<td><%=h bus.destination ? bus.destination.name : nil %></td>
     <td><%=h bus.departure %></td>
     <td><%=h bus.arrival %></td>
     <td><%=h bus.return %></td>
     <td><%=h bus.ticket_price %></td>
-    <td><%=h bus.comment %></td>
     <td><%=h bus.status.to_s.humanize %></td>
     <td><%=h bus.direction.to_s.humanize %></td>
     <td><%=h bus.maximum_seats %></td>

@@ -16,7 +16,7 @@ class Trip < ActiveRecord::Base
 	belongs_to :destination
 
   def to_s
-    "Trip: " + name + " " + destination + " " + departure.strftime("%H:%M") + " " + arrival.strftime("%H:%M") + " " + self.return.strftime("%H:%M") + " $" + ticket_price.to_s + " " + weekday.to_s + " " + sales_lead.to_s + " " + return_trip.to_s
+    "Trip: " + name + " " + destination.name + " " + departure.strftime("%H:%M") + " " + arrival.strftime("%H:%M") + " " + self.return.strftime("%H:%M") + " $" + ticket_price.to_s + " " + weekday.to_s + " " + sales_lead.to_s + " " + return_trip.to_s
   end
 
   def has_bus? bus

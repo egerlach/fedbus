@@ -17,7 +17,7 @@
 <% @trips.each do |trip| %>
   <tr>
     <td><%=h trip.name %></td>
-    <td><%=h trip.destination %></td>
+    <td><%=h trip.destination.name %></td>
     <td><%=h trip.weekday %></td>
     <td><%=h datetime_to_strtime trip.departure %></td>
     <td><%=h datetime_to_strtime trip.arrival %></td>

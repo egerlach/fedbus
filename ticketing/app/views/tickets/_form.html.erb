@@ -6,7 +6,7 @@
 	</p>
 	<p>
 		<%= f.label :bus %><br />
-		<%= collection_select :ticket, :bus_id, Bus.all, :id, :name %>
+		<%= collection_select :ticket, :bus_id, Bus.where(["departure >= ?", Date.today]), :id, :name %>
 	</p>
   <p>
     <%= f.label :direction %><br />

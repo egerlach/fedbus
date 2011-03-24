@@ -6,7 +6,7 @@
 </p>
 <p>
   <%= f.label :destination %><br />
-  <%= f.text_field :destination %>
+  <%= collection_select :trip, :destination_id, Destination.all, :id, :name %>
 </p>
 <p>
   <%= f.label :weekday %><br />
