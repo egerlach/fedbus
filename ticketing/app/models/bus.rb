@@ -33,6 +33,7 @@ class Bus < ActiveRecord::Base
                  }
       )    
 
+    # Make sure that departure < arrival < return
     if trip.departure < trip.arrival 
       b.arrival = cat_date_time(dep_date, trip.arrival)
     else 
@@ -48,7 +49,6 @@ class Bus < ActiveRecord::Base
 
     return b
 
-    # Make sure that departure < arrival < return
   end
 
   def date

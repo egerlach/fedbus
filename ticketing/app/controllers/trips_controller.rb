@@ -90,6 +90,7 @@ class TripsController < ApplicationController
 
   # GET /trips/generate
   def generate
+		Rails.logger.info "generate"
     @trips = Trip.all
 		@created = 0
 
@@ -114,7 +115,7 @@ class TripsController < ApplicationController
       # Are there buses on each day there needs to be?
       # If not, create them
       (0..buses-1).each do |week|
-        trip_date = now + week.weeks
+        trip_date = now + days_in_future + week.weeks
         holiday_offset = Holiday.offset(trip_date)
         reading_offset = ReadingWeek.offset(trip_date)
 
