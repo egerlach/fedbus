@@ -1,17 +1,17 @@
 <script type="text/javascript">
-	var dirs = ["from", "to"]
+	var dirs = ["zero", "one"]
 
 	// dir - index in the dirs list, 0 or 1, for the 'non-other' trip direction
 	// id - Bus id to get matching trip for
 	function change_other_trip(dir, id)
 	{
-		var otherTicketSelect = document.getElementById("ticket_" + dirs[(dir + 1) % 2] + "_id");
+		var otherTicketSelect = document.getElementById("ticket_" + ((dir + 1) % 2).toString() + "_id");
 
-		if(!document.getElementById(dirs[(dir + 1) % 2]).checked ||
+		if(!document.getElementById(dirs[(dir + 1) % 2] + "_select").checked ||
 				otherTicketSelect.selectedIndex != 0)
 			return
 
-		var table = document.getElementById("return_" + dirs[dir]);
+		var table = document.getElementById("return_" + dir.toString());
 		var r = table.rows;
 		var l = r.length;
 		var c;
@@ -30,32 +30,20 @@
 
 <!-- Hidden tables for javascript function -->
 
-<table style="display: none;" id="return_to">
+<table style="display: none;" id="return_0">
 	<% @forward.each do |bus| %>
 		<tr>
 			<td><%= bus.id %></td>
-			<td><% @backward.each_with_index do |b, i| %>
-						<% if b.destination == bus.destination %>
-							<%= i + 1 %>
-							<% break %>
-						<% end %>
-					<% end %>
-			</td>
+			<td><% @backward.each_with_index do |b, i| %><% if b.destination == bus.destination %><%= i + 1 %><% break %><% end %><% end %></td>
 		</tr>
 	<% end %>
 </table>
 
-<table style="display: none;" id="return_from">
+<table style="display: none;" id="return_1">
 	<% @backward.each do |bus| %>
 		<tr>
 			<td><%= bus.id %></td>
-			<td><% @forward.each_with_index do |b, i| %>
-						<% if b.destination == bus.destination %>
-							<%= i + 1 %>
-							<% break %>
-						<% end %>
-					<% end %>
-			</td>
+			<td><% @forward.each_with_index do |b, i| %><% if b.destination == bus.destination %><%= i + 1 %><% break %><% end %><% end %></td>
 		</tr>
 	<% end %>
 </table>
@@ -65,12 +53,15 @@
 <p>
 	Select tickets:
 </p>
+
+<%= form_tag "/tickets/reserve2" do %>
+
 <table>
 		<tr>
-			<td><%= check_box_tag 'to', '1', true, { :onchange => "change_other_trip(0, document.getElementById('ticket_from_id').value);"} %></td>
+			<td><%= check_box_tag 'zero_select', '1', true, { :onchange => "change_other_trip(1, document.getElementById('ticket_1_id').value);"} %></td>
 			<td><%= @otherdir ? "Travelling from:" : "Travelling to:" %></td>
 			<td><% if @forward %>
-						<%= collection_select :ticket_to, :id, @forward, :id, :destination_and_time_from, { :include_blank => "Select #{ @otherdir ? 'Origin' : 'Destination'}"}, { :onchange => "change_other_trip(1, this.value);"} %>
+						<%= collection_select :ticket_0, :id, @forward, :id, :destination_and_time_from, { :include_blank => "Select #{ @otherdir ? 'Origin' : 'Destination'}"}, { :onchange => "change_other_trip(0, this.value);"} %>
 					<% else %>
 						<%= "No buses available" %>
 					<% end %>
@@ -79,21 +70,28 @@
 		</tr>
 
 		<tr>
-			<td><%= check_box_tag 'from', '1', false,  { :onchange => "change_other_trip(1, document.getElementById('ticket_to_id').value);"} %></td>
+			<td><%= check_box_tag 'one_select', '1', false,  { :onchange => "change_other_trip(0, document.getElementById('ticket_0_id').value);"} %></td>
 			<td><%= @otherdir ? "Returning to:" : "Returning from:" %> </td>
 			<td><% if @backward %>
-						<%= collection_select :ticket_from, :id, @backward, :id, :destination_and_time_to, { :include_blank => "Select #{ @otherdir ? 'Destination' : 'Origin'}" }, { :onchange =>  "change_other_trip(0, this.value);" } %>
+						<%= collection_select :ticket_1, :id, @backward, :id, :destination_and_time_to, { :include_blank => "Select #{ @otherdir ? 'Destination' : 'Origin'}" }, { :onchange =>  "change_other_trip(1, this.value);" } %>
 					<% else %>
 						<%= "No buses available" %>
 					<% end %>
 			</td>
 			<td><%= @dayfrom ? "on #{@dayfrom}" : nil %></td>
 	</tr>
+	<tr>
+		<td>
+			<%= submit_tag 'Reserve' %>
+		</td>
+	</tr>
 </table>	
-
+<%= hidden_field_tag :direction,  @otherdir ? 1 : 0 %>
+<% end %>
 
 <p>
 	<%= link_to "I am travelling in the other direction", root_path(:opposite => (@otherdir ? "0" : "1")) %>
 </p>
+
 
 

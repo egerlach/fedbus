@@ -1,0 +1,20 @@
+<% if @errors.nil? %>
+	<% @tickets.each do |t| %>
+		<%= link_to "Ticket #{t.id.to_s}", t %>
+		<br />
+		<%= "For the bus: #{t.bus.name}" %>
+		<br />
+		<%= "In the direction: #{t.direction.to_s.humanize}" %> 
+		<br />
+		<% t.errors.each do |e| %>
+			<br />
+			<%= "Error: #{e.to_s}" %>
+		<% end %>
+	<% end %>
+<% else %>
+	<%= @errors %>
+	<% @tickets_on_date.each do |t| %>
+		<br />
+		<%= link_to "Ticket #{t.id.to_s}", t %>
+	<% end %>
+<% end %>

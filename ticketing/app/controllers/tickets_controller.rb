@@ -150,6 +150,54 @@ class TicketsController < ApplicationController
 
 	end
 
+	def reserve2
+		dir = params[:direction]
+		@dirs = [:from_waterloo, :to_waterloo]
+		@dirs = [:to_waterloo, :from_waterloo] if dir.to_i == 1
+
+		@errors = nil
+		@tickets_on_date = []
+		@tickets = []
+
+		@buses = [params[:zero_select].to_i, params[:one_select].to_i]
+
+		if @buses[0] != 1 and @buses[1] != 1
+			redirect_to root_path(:opposite => dir) 
+			return
+		else
+			@buses.each_with_index do |b, i|
+				if b != 1 
+					next
+				end
+
+				id = params["ticket_#{i.to_s}".to_sym][:id]
+
+				if id.empty?
+					@errors = "Please select a bus for your selection '#{@dirs[i].to_s.humanize.downcase}'"
+					return
+				end
+
+				bus = Bus.find id.to_i
+				date = bus.departure.to_date
+
+				if(!(@tickets_on_date = current_user.tickets_for_date(date)).empty?)
+					@errors = "You already have a ticket on " + date.to_s
+					return
+				end
+
+				t = Ticket.new
+				t.bus = bus
+				t.user = current_user
+				t.status = :reserved
+				t.direction = @dirs[i]
+				t.save!
+
+				@tickets << t
+			end
+		end
+
+	end
+
 	def expire
 		@expired = Ticket.expire
 	end
