@@ -1,4 +1,6 @@
 class DestinationsController < ApplicationController
+	before_filter permission_required(:destinations)
+
   # GET /destinations
   # GET /destinations.xml
   def index

@@ -29,3 +29,6 @@ buses:
 
 tickets:
   name: Tickets
+
+destinations:
+  name: Destinations
