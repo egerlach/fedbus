@@ -10,7 +10,7 @@
 <% @holidays.each do |holiday| %>
   <tr>
     <td><%=h holiday.date %></td>
-    <td><%=h holiday.trip_offset %></td>
+    <td><%=h holiday.offset_date %></td>
     <td><%=h holiday.comment %></td>
     <td><%= link_to 'Show', holiday %></td>
     <td><%= link_to 'Edit', edit_holiday_path(holiday) %></td>
