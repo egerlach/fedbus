@@ -109,48 +109,7 @@ class TicketsController < ApplicationController
 		redirect_to(tickets_url)
   end
 
-	def browse
-		@buses = Bus.all
-
-		respond_to do |format|
-			format.html
-		end
-	end
-
 	def reserve
-		@bus = Bus.find(params[:bus_id])
-		@direction = params[:bus]["direction"].to_sym
-		@errors = nil
-
-		@date = 
-			if(@direction == Ticket::DIRECTIONS[1]) # :to_waterloo
-				@bus.arrival.to_date
-			elsif(@direction == Ticket::DIRECTIONS[0]) #:from_waterloo
-				@bus.departure.to_date
-			end
-
-		@tickets_on_date = current_user.tickets_for_date(@date)
-		if(!@tickets_on_date.empty?)
-			@errors = "You already have a ticket on " + @date.to_s
-			return
-		end
-
-		@ticket = Ticket.new
-
-		@ticket.bus = @bus
-		@ticket.user = current_user
-		@ticket.status = :reserved
-		@ticket.direction = @direction
-		@ticket.save!
-
-		l = TicketLog.new
-		l.ticket = @ticket
-		l.log = "Reserved ticket"
-		l.save!
-
-	end
-
-	def reserve2
 		dir = params[:direction]
 		@dirs = [:from_waterloo, :to_waterloo]
 		@dirs = [:to_waterloo, :from_waterloo] if dir.to_i == 1
@@ -209,7 +168,11 @@ class TicketsController < ApplicationController
 			if @buses.empty? 
 				nil
 			else
-				@buses.length == 1 ? @buses[0].departure.to_date : (@buses.inject { |d1, d2| d1.departure.to_date <= d2.departure.to_date ? d1 : d2 }).departure.to_date
+				if @buses.length == 1
+					@buses[0].departure.to_date
+				else
+					(@buses.inject { |d1, d2| d1.departure.to_date <= d2.departure.to_date ? d1 : d2 }).departure.to_date
+				end
 			end
 
 		@otherdir = params[:opposite] == "1"

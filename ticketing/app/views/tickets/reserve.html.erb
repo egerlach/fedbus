@@ -1,14 +1,15 @@
-<%# "Tickets have been reserved for " + current_user.to_s %>
 <% if @errors.nil? %>
-	<%= link_to "Ticket #{@ticket.id.to_s}", @ticket %>
-	<br />
-	<%= "For the bus: #{@bus.name}" %>
-	<br />
-	<%= "In the direction: #{@ticket.direction.to_s.humanize}" %> 
-	<br />
-	<% @ticket.errors.each do |e| %>
+	<% @tickets.each do |t| %>
+		<%= link_to "Ticket #{t.id.to_s}", t %>
 		<br />
-		<%= "Error: #{e.to_s}" %>
+		<%= "For the bus: #{t.bus.name}" %>
+		<br />
+		<%= "In the direction: #{t.direction.to_s.humanize}" %> 
+		<br />
+		<% t.errors.each do |e| %>
+			<br />
+			<%= "Error: #{e.to_s}" %>
+		<% end %>
 	<% end %>
 <% else %>
 	<%= @errors %>
@@ -17,4 +18,3 @@
 		<%= link_to "Ticket #{t.id.to_s}", t %>
 	<% end %>
 <% end %>
-

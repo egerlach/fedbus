@@ -16,7 +16,7 @@
 <% @buses.each do |bus| %>
   <tr>
     <td><%=h bus.name %></td>
-		<td><%=h bus.destination ? bus.destination.name : nil %></td>
+		<td><%=h bus.destination.name %></td>
     <td><%=h bus.departure %></td>
     <td><%=h bus.arrival %></td>
     <td><%=h bus.return %></td>

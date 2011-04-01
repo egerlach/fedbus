@@ -46,10 +46,10 @@ class Ticket < ActiveRecord::Base
 
 
 	def self.expire
-		@ticketz = Ticket.where ["created_at <= ? and STATUS = ?", Time.now - 15.minutes, :reserved]
+		ticketz = Ticket.where ["created_at <= ? and STATUS = ?", Time.now - 15.minutes, :reserved]
 		i = 0
 		
-		@ticketz.each do |t|
+		ticketz.each do |t|
 			t.status = :expired
 			t.save!
 

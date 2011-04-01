@@ -41,7 +41,6 @@ Ticketing::Application.routes.draw do
 
 	resources :tickets do
 		collection do
-			get 'browse'
 			post 'reserve'
 			get 'expire'
 			get 'buy'
