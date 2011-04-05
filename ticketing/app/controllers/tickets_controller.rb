@@ -193,6 +193,11 @@ class TicketsController < ApplicationController
 	def recent
 		@time = params[:time] ? Time.at(params[:time].to_i) : Time.now - 86400
 		@recent = Ticket.where ["updated_at >= ?", @time]
+
+		respond_to do |format|
+			format.html
+			format.xml
+		end
 	end
 
 
