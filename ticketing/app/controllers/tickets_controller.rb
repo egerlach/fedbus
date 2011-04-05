@@ -190,4 +190,10 @@ class TicketsController < ApplicationController
 		@dayfrom = @backward[0] ? @backward[0].departure.strftime("%A") : nil
 	end
 
+	def recent
+		@time = params[:time] ? Time.at(params[:time].to_i) : Time.now - 86400
+		@recent = Ticket.where ["updated_at >= ?", @time]
+	end
+
+
 end

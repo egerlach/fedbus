@@ -1,6 +1,6 @@
 class Ticket < ActiveRecord::Base
   DIRECTIONS = [:from_waterloo, :to_waterloo]
-	STATUSES = [:reserved, :paid, :void, :expired]
+	STATUSES = [:reserved, :paid, :void, :expired, :used]
 
   belongs_to :user
   belongs_to :bus

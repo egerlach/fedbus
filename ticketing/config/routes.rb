@@ -44,6 +44,7 @@ Ticketing::Application.routes.draw do
 			post 'reserve'
 			get 'expire'
 			get 'buy'
+			get 'recent'
 		end
 	end
 

@@ -1,0 +1,22 @@
+<% if !@recent.empty? %>
+	<table>
+		<tr>
+			<td>Ticket ID</td>
+			<td>Ticket Status</td>
+			<td>Bus ID</td>
+			<td>Student ID</td>
+		</tr>
+		<% @recent.each do |t| %>
+			<tr>
+				<td><%= link_to t.id.to_s, t %></td>
+				<td><%= t.status.to_s.humanize %></td>
+				<td><%= link_to t.bus.id.to_s, t.bus %></td>
+				<td><%= link_to t.user.student_number_hash, t.user %></td>
+			</tr>
+		<% end %>
+	</table>
+<% else %>
+	<p>
+		There is nothing updated since the request time (or in the past day)
+	</p>
+<% end %>
